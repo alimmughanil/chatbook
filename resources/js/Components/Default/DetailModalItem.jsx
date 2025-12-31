@@ -1,9 +1,9 @@
-import useStatus, { useStatusLabel } from '@/utlis/useStatus';
+import useStatus, { useStatusLabel } from '@/utils/useStatus';
 import { Link, usePage } from '@inertiajs/react';
 import React, { useState } from 'react'
 import RowLabel from '../RowLabel';
-import { currency, dateFormat, isFunction, isNumber } from '@/utlis/format';
-import useLang from '@/utlis/useLang';
+import { currency, dateFormat, isFunction, isNumber } from '@/utils/format';
+import useLang from '@/utils/useLang';
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { ModalButton } from '../WithModal';

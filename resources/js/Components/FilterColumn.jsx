@@ -1,17 +1,18 @@
-import useLang from "@/utlis/useLang";
+import useLang from "@/utils/useLang";
 import { router, usePage } from "@inertiajs/react";
 import { useState } from "react";
 
-function FilterColumn({ options, prefix = '', label = "Filter", queryName = 'filter', isTab = false, setData = null, defaultValue = '', onChange= null }) {
+function FilterColumn({ options, prefix = '', label = "Filter", queryName = 'filter', isTab = false, setData = null, defaultValue = '', onChange = null }) {
   const { location } = usePage().props
   const params = new URLSearchParams(new URL(location).search)
   const [column, setColumn] = useState(params?.get(queryName) ?? defaultValue);
 
   const handleChange = (e) => {
     const value = e.target.value == '' ? null : e.target.value
-    
+
     if (setData) {
-      setData((state)=>({...state,
+      setData((state) => ({
+        ...state,
         [queryName]: value
       }))
 
@@ -30,18 +31,23 @@ function FilterColumn({ options, prefix = '', label = "Filter", queryName = 'fil
   return (
     <select className={`w-full border-gray-400 rounded-lg ${setData ? '' : 'h-8 text-sm py-0'}`} onChange={onChange ?? handleChange} defaultValue={column}>
       {isTab ? (<>
-        {options.map((option, index) => (
+        {options?.length > 0 ? options.map((option, index) => (
           <option key={index} value={option.value} className="capitalize">{option.label}</option>
-        ))}
+        )) : null}
       </>
       ) : (
         <>
           <option value="" className="text-gray-400">
             {params?.get(queryName) ? 'Hapus Filter' : label}
           </option>
-          {options.map((option, index) => (
-            <option key={index} value={option} className="capitalize">{useLang(prefix ? `${prefix}.${option}` : option)}</option>
-          ))}
+          {options?.length > 0 ? options.map((option, index) => {
+            let label = option?.label ?? option
+            let value = option?.value ?? option
+            
+            return (
+              <option key={index} value={value} className="capitalize">{label ? label : useLang(prefix ? `${prefix}.${value}` : value)}</option>
+            )
+          }) : null}
         </>
       )}
     </select>

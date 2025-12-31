@@ -1,7 +1,7 @@
 import { router, useForm, usePage } from "@inertiajs/react";
 import { useState } from "react";
 import { ModalButton } from "./WithModal";
-import { date } from "@/utlis/format";
+import { date } from "@/utils/format";
 import DateRangeModal from "./DateRangeModal";
 
 function SearchInput(state) {

@@ -10,8 +10,13 @@ import {
 } from "@/Components/ui/dropdown-menu";
 
 function HomeLayout({ Breadcrumb = null, footer = true, children, className = null }) {
-  const { props } = usePage()
-  const { title } = props
+  const { url, props } = usePage()
+  const { title, appName } = props
+
+  let appLogo = '/image/logo.png'
+  if (appName == 'TixHub') {
+    appLogo = '/image/tixhub_logo.jpeg'
+  }
 
   return (
     <>
@@ -39,11 +44,7 @@ const NavBar = () => {
 
   return (
     <nav
-      className="fixed top-0 left-0 w-full z-50 flex flex-col"
-      style={{
-        backgroundImage: 'linear-gradient(90deg, rgba(96, 23, 190, 1), rgba(131, 51, 234, 1))',
-        height: 'auto',
-      }}
+      className="fixed top-0 left-0 w-full z-50 flex flex-col linear-gradient-purple h-auto"
     >
 
       <div
@@ -124,7 +125,7 @@ function ProfileDropdown({ user, picture }) {
           <p className="text-sm text-gray-500">{user?.email}</p>
         </div>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,max-content))] justify-center gap-2">
           {navbarMenu.map((menu, i) => (
             <Link
               key={i}

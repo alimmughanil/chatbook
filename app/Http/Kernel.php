@@ -67,6 +67,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'role' => \App\Http\Middleware\EnsureUserRole::class,
         'setLanguage' => \App\Http\Middleware\SetLanguange::class,
-        'activeDoctor' => \App\Http\Middleware\CheckActiveDoctor::class,
+        'productPermission' => \App\Http\Middleware\ProductPermission::class,
     ];
 }

@@ -3,7 +3,7 @@ import ReactSelectVirtualized from 'react-select-virtualized';
 import CreatableSelect from 'react-select/creatable';
 import { AsyncPaginate } from 'react-select-async-paginate';
 import BaseForm from './BaseForm'
-import useLang from '@/utlis/useLang';
+import useLang from '@/utils/useLang';
 
 function Select(props) {
   const { name, handleChange, errors, alt = null, children, defaultValue, isReactSelect = false, options = null, isMulti = false, isDisabled = false, ref = null, prefix='' } = props

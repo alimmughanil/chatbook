@@ -1,4 +1,4 @@
-import { useSearchParams } from "@/utlis/format"
+import { useSearchParams } from "@/utils/format"
 import { Link, usePage } from "@inertiajs/react"
 
 const ShowNavigation = ({ links, pageUrl, defaultActive = null }) => {

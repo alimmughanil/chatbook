@@ -13,7 +13,17 @@ class GoogleAuthController extends Controller
   public function getAuthenticationPage(Request $request)
   {
     $redirectUrl = request()->session()->pull('redirect_auth_url', route('auth.dashboard.app'));
-    return Socialite::driver('google')->with(['state' => 'role=' . $request->role, 'redirect_url' => $redirectUrl])->redirect();
+    $roles = [
+      'partner' => UserType::Partner,
+      'user' => UserType::User
+    ];
+    
+    $role = null;
+    if ($request->role && isset($roles[$request->role])) {
+      $role = $roles[$request->role];
+    }
+
+    return Socialite::driver('google')->with(['state' => 'role=' . $role, 'redirect_url' => $redirectUrl])->redirect();
   }
   public function getCallback()
   {
@@ -27,6 +37,8 @@ class GoogleAuthController extends Controller
       if (!empty($result['role'])) {
         $role = $result['role'];
       }
+
+      $isRegistration = null;
 
       if (!$existUser) {
         $userData = [
@@ -43,9 +55,14 @@ class GoogleAuthController extends Controller
 
         $userData['username'] = $username;
         $existUser = User::create($userData);
+        $isRegistration = true;
       }
 
       auth()->login($existUser, true);
+
+      if ($isRegistration && $role == UserType::Partner) {
+        return redirect(route('auth.profile.index'))->with("success","Pembuatan akun anda berhasil, silahkan lengkapi data profil anda.");
+      }
 
       $redirectUrl = request()->session()->pull('redirect_auth_url', route('auth.dashboard.app'));
       if (!empty($result['redirect_url'])) {

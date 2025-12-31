@@ -1,0 +1,16 @@
+<?php
+
+return [
+    'PAYMENT' => [
+        'SUCCESS' => 'PAYMENT_SUCCESS',
+        'IN_PROGRESS' => 'PAYMENT_IN_PROGRESS',
+        'FAILED' => 'PAYMENT_FAILED'
+    ],
+    'ORDER' => [
+        'FINISHED' => 'ORDER_FINISHED',
+        'IN_PROGRESS' => 'ORDER_IN_PROGRESS',
+        'SUBMITTED' => 'ORDER_SUBMITTED',
+        'REQUEST_REVISION' => 'ORDER_REQUEST_REVISION',
+        'REQUEST_CANCELLATION' => 'ORDER_REQUEST_CANCELLATION',
+    ]
+];

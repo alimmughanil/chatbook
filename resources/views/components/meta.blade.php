@@ -67,7 +67,7 @@
 <meta property="og:image:size" content="300"/>
 <meta property="og:type" content="{{$type}}"/>
 
-<link rel="icon" type="image/png" href="{{$ziggy['url'] ."/image/icon.png"}}">
+<link rel="icon" type="image/png" href="{{$ziggy['url'] ."/image/logo.png"}}">
 
 @if (!empty($googleVerification))
     <meta name="google-site-verification" content="{{ $googleVerification }}" />

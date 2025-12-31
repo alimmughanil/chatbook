@@ -5,16 +5,18 @@ import {useRef} from 'react'
 import Rating from '@/Components/Form/Rating'
 
 const RatingFormModal = (state) => {
-  const {data: course, isAdmin = false, handleClick} = state
-  const MODAL_TYPE = `rating_form_${course?.id}`
+  const {data: order, isAdmin = false, handleClick} = state
+  const MODAL_TYPE = `rating_form_${order?.id}`
   const backButtonRef = useRef()
 
-  let feedback = course?.ratings?.length > 0 ? course?.ratings?.[0] : null
+  let feedback = order?.ratings?.length > 0 ? order?.ratings?.[0] : null
 
   const {data, setData, post, errors, processing} = useForm({
     type: 'rating',
     rating: feedback?.rating ?? 5,
-    message: feedback?.message
+    message: feedback?.message,
+    order_id: order?.id,
+    product_id: order?.product_id
   })
 
   function handleChange(e) {
@@ -28,9 +30,9 @@ const RatingFormModal = (state) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    post(`/course/${course.slug}/feedback`, {
+    post(`/app/feedback`, {
       onSuccess: () => {
-        router.reload({only: ['course'], async: false})
+        router.reload({only: ['order'], async: false})
         backButtonRef.current?.click()
       }
     })

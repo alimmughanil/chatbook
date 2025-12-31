@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Ikon kamera</title>
+  <desc id="desc">Ikon kamera gelap pada latar belakang yang bisa diubah warnanya</desc>
+
+  <!-- Background -->
+  <rect id="bg" width="1200" height="800" fill="#E8DAFA"/>
+
+  <!-- Camera group centered -->
+  <g id="camera" transform="translate(200,120)">
+    <!-- Body -->
+    <rect x="0" y="140" width="800" height="390" rx="40" fill="#4a4a4a"/>
+
+    <!-- Hump (centered above body) -->
+    <!-- Body width = 800, let hump span 420px centered -->
+    <!-- Center of body = 400 -->
+    <path d="M190 140 h120 q25 -60 50 -60 h120 q25 0 50 60 h120" fill="#4a4a4a"/>
+
+    <!-- Top-left button -->
+    <rect x="40" y="90" width="80" height="45" rx="10" fill="#4a4a4a"/>
+
+    <!-- Right indicator -->
+    <rect x="680" y="210" width="85" height="45" rx="20" fill="#ffffff" opacity="0.9"/>
+
+    <!-- Lens outer ring (centered at x=400) -->
+    <circle cx="400" cy="335" r="135" fill="#ffffff"/>
+
+    <!-- Lens inner -->
+    <circle cx="400" cy="335" r="95" fill="#4a4a4a"/>
+
+    <!-- subtle border -->
+    <rect x="0" y="140" width="800" height="390" rx="40" 
+          fill="none" stroke="#2e2e2e" stroke-width="2" opacity="0.12"/>
+  </g>
+</svg>

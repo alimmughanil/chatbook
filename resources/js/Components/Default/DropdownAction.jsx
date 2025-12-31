@@ -3,7 +3,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu"
-import { isFunction } from "@/utlis/format"
+import { isFunction } from "@/utils/format"
 
 export const DropdownAction = (props) => {
   const { actionMenu, item, align = "start", isTable = true, btnClassName = null, Tag } = props

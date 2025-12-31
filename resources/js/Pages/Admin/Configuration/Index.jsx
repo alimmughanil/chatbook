@@ -3,7 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import DeleteModal from './Modal/DeleteModal'
 import { useState } from 'react'
 import ConfigurationForm from './Form/ConfigurationForm'
-import useLinkTabs from '@/utlis/useLinkTabs'
+import useLinkTabs from '@/utils/useLinkTabs'
 
 function Index(props) {
   const { url } = usePage()  

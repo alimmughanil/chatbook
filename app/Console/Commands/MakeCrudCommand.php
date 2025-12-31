@@ -14,7 +14,7 @@ class MakeCrudCommand extends Command
    *
    * @var string
    */
-  protected $signature = 'make:crud {migration_file} {--label=} {--rollback} {--prefix_url=} {--format} {--icon=} {--custom_validation=} {--custom_labels=}';
+  protected $signature = 'make:crud {migration_file} {--label=} {--rollback} {--prefix_url=} {--format} {--icon=} {--custom_validation=} {--custom_labels=} {--namespace=}';
 
   /**
    * Deskripsi dari perintah konsol.
@@ -76,8 +76,10 @@ class MakeCrudCommand extends Command
     $modelNameCamel = Str::camel($modelName);
     $modelNamePlural = Str::plural($modelName);
     $modelNameCamelPlural = Str::camel($modelNamePlural);
-    $subNamespace = 'Admin';
-    $adminPath = 'Admin';
+    $subNamespace = $this->option('namespace') ?? "Admin";
+    $adminPath = $this->option('namespace') ?? "Admin";
+    $subNamespace = str_replace("/", "\\", $subNamespace);
+
     $pageLabel = $this->option('label') ?? Str::headline($modelName);
 
     $prefixUrl = $this->option('prefix_url');
@@ -108,7 +110,6 @@ class MakeCrudCommand extends Command
       $this->rollbackController($placeholders);
       $this->rollbackReactViews($placeholders);
       $this->rollbackRoute($placeholders);
-      $this->rollbackSidebarMenuEntry($placeholders);
 
       $this->info("Rollback complete.");
       return 0;
@@ -147,12 +148,18 @@ class MakeCrudCommand extends Command
       } elseif ($column === 'status') {
         $formType = 'select';
         $formProps['options'] = "props.status";
-      } elseif (Str::contains($column, ['description', 'content', 'body'])) {
+      } elseif (Str::contains($column, ['description', 'content', 'body', 'seo_keyword', 'seo_description'])) {
         $formType = 'textarea';
+        $isTextEditor = true;
       } elseif (Str::endsWith($column, '_at')) {
         $formType = 'DatePicker';
-      } elseif (Str::contains($column, ['image', 'avatar', 'thumbnail', 'file'])) {
+      } elseif (Str::contains($column, ['image', 'avatar', 'thumbnail', 'file', 'cover', 'picture', 'photo', 'video'])) {
         $formType = 'FileUploader';
+      }
+
+      if ($isTextEditor) {
+        $formProps['isTextEditor'] = true;
+        $formProps['setData'] = 'js::setData';
       }
 
       $header = [
@@ -160,7 +167,8 @@ class MakeCrudCommand extends Command
         'value' => $column,
       ];
 
-      if (Str::contains($column, ['name', 'title', 'slug', 'description', 'content'])) {
+      $searchableColumns = ['name', 'title', 'email', 'phone', 'slug', 'description', 'content', 'body', 'seo_keyword', 'seo_description', 'type', 'order_number'];
+      if (Str::contains($column, $searchableColumns)) {
         $header['isSearchable'] = true;
       }
 
@@ -221,12 +229,13 @@ class MakeCrudCommand extends Command
     }
 
     $tableHeaderEntries[] = ['label' => 'Status', 'value' => 'status', 'type' => 'status'];
-    $tableHeaderEntries[] = ['label' => 'Dibuat', 'value' => 'created_at', 'type' => 'date', 'isSearchable' => true];
-    $tableHeaderEntries[] = ['label' => 'Diperbarui', 'value' => 'updated_at', 'type' => 'date', 'isSearchable' => true];
+    $tableHeaderEntries[] = ['label' => 'Dibuat', 'value' => 'created_at', 'type' => 'date', 'isSearchable' => true, 'className' => 'text-[13px] w-[10%] md:w-[100px] !whitespace-pre',];
+    $tableHeaderEntries[] = ['label' => 'Diperbarui', 'value' => 'updated_at', 'type' => 'date', 'isSearchable' => true, 'className' => 'text-[13px] w-[10%] md:w-[100px] !whitespace-pre'];
     $tableHeaderEntries[] = [
       'label' => 'Dihapus',
       'value' => 'deleted_at',
       'type' => 'date',
+      'className' => 'text-[13px] w-[10%] md:w-[100px] !whitespace-pre',
       'isHidden' => "params.get('deleted_at') != 'show'",
     ];
     $tableHeaderEntries[] = ['label' => 'Aksi', 'value' => 'id', 'type' => 'action'];
@@ -248,12 +257,13 @@ class MakeCrudCommand extends Command
     $this->createReactView('Create', $placeholders);
     $this->createReactView('Edit', $placeholders);
     $this->createReactView('MainForm', $placeholders);
+    $this->createReactView('Show', $placeholders);
 
     $this->appendRouteToWebPhp($placeholders);
     $this->appendSidebarMenuEntry($placeholders);
 
     if ($this->option('format')) {
-      $this->runFormatter($modelName);
+      $this->runFormatter($modelName, $placeholders);
     }
 
     $this->info('CRUD files generated successfully, and routes appended laravel routes and AuthenticatedLayout.jsx!');
@@ -265,7 +275,7 @@ class MakeCrudCommand extends Command
   {
     $stub = File::get($this->stubsPath . 'Controller/DefaultController.stub');
     $content = str_replace(array_keys($placeholders), array_values($placeholders), $stub);
-    $controllerDir = app_path('Http/Controllers/' . $placeholders['{{ SubNamespace }}']);
+    $controllerDir = app_path('Http/Controllers/' . $placeholders['{{ AdminPath }}']);
     if (!File::exists($controllerDir)) {
       File::makeDirectory($controllerDir, 0755, true);
     }
@@ -278,6 +288,7 @@ class MakeCrudCommand extends Command
   {
     $stub = File::get($this->stubsPath . "View/$viewType.React.stub");
     $content = str_replace(array_keys($placeholders), array_values($placeholders), $stub);
+    $content = str_replace("'js::setData'", "setData", $content);
 
     $viewDir = resource_path('js/Pages/' . $placeholders['{{ AdminPath }}'] . '/' . $placeholders['{{ ModelName }}']);
 
@@ -302,15 +313,15 @@ class MakeCrudCommand extends Command
     $targetRoutePath = File::exists($backofficeRoutePath) ? $backofficeRoutePath : $webRoutePath;
     $targetRouteFileName = Str::afterLast($targetRoutePath, '/');
 
-    $controllerClass = "App\Http\Controllers\\"
-      . $placeholders['{{ SubNamespace }}']
+    $controllerClass = $placeholders['{{ SubNamespace }}']
       . "\\"
       . $placeholders['{{ ModelName }}']
       . "Controller";
 
     $newRoute = "    Route::resource('"
       . substr($placeholders['{{ pageUrl }}'], 5)
-      . "', \\{$controllerClass}::class)->only('index', 'create', 'edit', 'store', 'update', 'destroy');";
+      . "', {$controllerClass}::class)->only('php::resourceMethod');";
+    $newRoute = str_replace("'php::resourceMethod'", '[...$resourceMethod]', $newRoute);
 
     if (!File::exists($targetRoutePath)) {
       $this->warn("Route file not found, skipping route append.");
@@ -328,7 +339,8 @@ class MakeCrudCommand extends Command
     $updatedFileContent = $routeFileContent;
 
     // 1️⃣ Cek blok admin group
-    if (preg_match('/Route::middleware\(\s*\[\'auth\',\s*\'role:admin\'\]\s*\)\s*->prefix\(\'admin\'\)\s*->name\(\'admin\.' . '\'\)\s*->group\(function\s*\(\)\s*\{([\s\S]*?)\}\);/m', $routeFileContent, $matches)) {
+    $pattern = '/Route::middleware\(\s*\[\s*\'auth\'\s*,\s*\'role:admin\'\s*\]\s*\)\s*->prefix\(\s*\'admin\'\s*\)\s*->name\(\s*\'admin\.\'\s*\)\s*->group\(\s*function\s*\(\)\s*(?:\s*use\s*\([^)]*\)\s*)?\{([\s\S]*?)\}\s*\);/m';
+    if (preg_match($pattern, $routeFileContent, $matches)) {
       $adminGroupContent = $matches[0];
       $newAdminGroupContent = substr($adminGroupContent, 0, -3) // buang "});"
         . $newRoute . "\n});";
@@ -351,108 +363,109 @@ class MakeCrudCommand extends Command
   }
 
 
-protected function appendSidebarMenuEntry(array $placeholders)
-{
+  protected function appendSidebarMenuEntry(array $placeholders)
+  {
     $jsonDir = resource_path('json');
     $jsonPath = $jsonDir . '/sidebarMenu.json';
 
     // Pastikan direktori ada
     if (!File::exists($jsonDir)) {
-        File::makeDirectory($jsonDir, 0755, true);
-        $this->info("Created directory: {$jsonDir}");
+      File::makeDirectory($jsonDir, 0755, true);
+      $this->info("Created directory: {$jsonDir}");
     }
 
     // Jika file belum ada, inisialisasi sebagai array kosong
     if (!File::exists($jsonPath)) {
-        File::put($jsonPath, json_encode([], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-        $this->info("Created new sidebarMenu.json file.");
+      File::put($jsonPath, json_encode([], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+      $this->info("Created new sidebarMenu.json file.");
     }
 
     // Baca isi JSON
     $menu = json_decode(File::get($jsonPath), true);
     if (json_last_error() !== JSON_ERROR_NONE) {
-        $this->error("Failed to parse sidebarMenu.json: " . json_last_error_msg());
-        return;
+      $this->error("Failed to parse sidebarMenu.json: " . json_last_error_msg());
+      return;
     }
 
     // Ambil variabel dari placeholder
-    $pageUrl    = $placeholders['{{ pageUrl }}'];
-    $pageLabel  = $placeholders['{{ pageLabel }}'];
-    $iconClass  = $this->option('icon') 
-        ?? ($this->iconDictionary[$placeholders['{{ tableName }}']] ?? 'fas fa-cube fa-fw');
+    $pageUrl = $placeholders['{{ pageUrl }}'];
+    $pageLabel = $placeholders['{{ pageLabel }}'];
+    $iconClass = $this->option('icon')
+      ?? ($this->iconDictionary[$placeholders['{{ tableName }}']] ?? 'fas fa-cube fa-fw');
 
-    $prefix     = $this->option('prefix_url') 
-        ? Str::of($this->option('prefix_url'))->after('admin/')->before('/') 
-        : null;
+    $prefix = $this->option('prefix_url')
+      ? Str::of($this->option('prefix_url'))->after('admin/')->before('/')
+      : null;
 
     $isDropdown = !empty($prefix);
 
     // ==== Cegah duplikasi ====
     foreach ($menu as $item) {
-        if (isset($item['link']) && $item['link'] === "/{$pageUrl}") {
-            $this->warn("Sidebar menu entry for '{$pageLabel}' already exists. Skipping.");
+      if (isset($item['link']) && $item['link'] === "/{$pageUrl}") {
+        $this->warn("Sidebar menu entry for '{$pageLabel}' already exists. Skipping.");
+        return;
+      }
+      if (isset($item['dropdown'])) {
+        foreach ($item['dropdown'] as $child) {
+          if (isset($child['link']) && $child['link'] === "/{$pageUrl}") {
+            $this->warn("Sidebar dropdown entry for '{$pageLabel}' already exists. Skipping.");
             return;
+          }
         }
-        if (isset($item['dropdown'])) {
-            foreach ($item['dropdown'] as $child) {
-                if (isset($child['link']) && $child['link'] === "/{$pageUrl}") {
-                    $this->warn("Sidebar dropdown entry for '{$pageLabel}' already exists. Skipping.");
-                    return;
-                }
-            }
-        }
+      }
     }
 
     // ==== Tambah entry ====
     if ($isDropdown) {
-        $parentTitle = Str::of($prefix)->headline();
-        $parentIcon = $this->iconDictionary[Str::plural($prefix)] ?? 'fas fa-cube fa-fw';
-        $childMenuItem = [
-            'title' => $pageLabel,
-            'link'  => "/{$pageUrl}"
-        ];
+      $parentTitle = Str::of($prefix)->headline();
+      $parentIcon = $this->iconDictionary[Str::plural($prefix)] ?? 'fas fa-cube fa-fw';
+      $childMenuItem = [
+        'title' => $pageLabel,
+        'link' => "/{$pageUrl}"
+      ];
 
-        $foundParent = false;
-        foreach ($menu as &$item) {
-            if ($item['title'] === $parentTitle && isset($item['dropdown'])) {
-                $item['dropdown'][] = $childMenuItem;
-                $foundParent = true;
-                break;
-            }
+      $foundParent = false;
+      foreach ($menu as &$item) {
+        if ($item['title'] === $parentTitle && isset($item['dropdown'])) {
+          $item['dropdown'][] = $childMenuItem;
+          $foundParent = true;
+          break;
         }
+      }
 
-        if (!$foundParent) {
-            $menu[] = [
-                'title'          => $parentTitle,
-                'fa_icon'        => $parentIcon,
-                'icon_provider'  => 'fontawesome',
-                'dropdown'       => [$childMenuItem],
-            ];
-        }
-    } else {
+      if (!$foundParent) {
         $menu[] = [
-            'title'          => $pageLabel,
-            'fa_icon'        => $iconClass,
-            'icon_provider'  => 'fontawesome',
-            'link'           => "/{$pageUrl}",
+          'title' => $parentTitle,
+          'fa_icon' => $parentIcon,
+          'icon_provider' => 'fontawesome',
+          'dropdown' => [$childMenuItem],
         ];
+      }
+    } else {
+      $menu[] = [
+        'title' => $pageLabel,
+        'fa_icon' => $iconClass,
+        'icon_provider' => 'fontawesome',
+        'link' => "/{$pageUrl}",
+      ];
     }
 
     // ==== Simpan kembali ke JSON ====
     File::put($jsonPath, json_encode($menu, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     $this->info("Sidebar menu entry for '{$pageLabel}' added to sidebarMenu.json");
-}
+  }
 
 
 
-  protected function runFormatter(string $modelName)
+  protected function runFormatter(string $modelName, array $placeholders)
   {
     $filesToFormat = [
-      app_path("Http/Controllers/Admin/{$modelName}Controller.php"),
-      resource_path("js/Pages/Admin/{$modelName}/Index.jsx"),
-      resource_path("js/Pages/Admin/{$modelName}/Create.jsx"),
-      resource_path("js/Pages/Admin/{$modelName}/Edit.jsx"),
-      resource_path("js/Pages/Admin/{$modelName}/Form/MainForm.jsx"),
+      app_path("Http/Controllers/{$placeholders['{{ AdminPath }}']}/{$modelName}Controller.php"),
+      resource_path("js/Pages/{$placeholders['{{ AdminPath }}']}/$modelName/Index.jsx"),
+      resource_path("js/Pages/{$placeholders['{{ AdminPath }}']}/$modelName/Create.jsx"),
+      resource_path("js/Pages/{$placeholders['{{ AdminPath }}']}/$modelName/Edit.jsx"),
+      resource_path("js/Pages/{$placeholders['{{ AdminPath }}']}/$modelName/Show.jsx"),
+      resource_path("js/Pages/{$placeholders['{{ AdminPath }}']}/$modelName/Form/MainForm.jsx"),
       // resource_path("js/Layouts/AuthenticatedLayout.jsx"),
     ];
 
@@ -473,7 +486,7 @@ protected function appendSidebarMenuEntry(array $placeholders)
 
   protected function rollbackController(array $placeholders)
   {
-    $controllerDir = app_path('Http/Controllers/' . $placeholders['{{ SubNamespace }}']);
+    $controllerDir = app_path('Http/Controllers/' . $placeholders['{{ AdminPath }}']);
     $controllerPath = $controllerDir . '/' . $placeholders['{{ ModelName }}'] . 'Controller.php';
 
     if (File::exists($controllerPath)) {
@@ -501,6 +514,7 @@ protected function appendSidebarMenuEntry(array $placeholders)
       "{$baseViewDir}/Index.jsx",
       "{$baseViewDir}/Create.jsx",
       "{$baseViewDir}/Edit.jsx",
+      "{$baseViewDir}/Show.jsx",
       "{$formViewDir}/MainForm.jsx",
     ];
 
@@ -532,8 +546,15 @@ protected function appendSidebarMenuEntry(array $placeholders)
     $targetRoutePath = File::exists($backofficeRoutePath) ? $backofficeRoutePath : $webRoutePath;
     $targetRouteFileName = Str::afterLast($targetRoutePath, '/');
 
-    $controllerClass = "App\Http\Controllers\\" . $placeholders['{{ SubNamespace }}'] . "\\" . $placeholders['{{ ModelName }}'] . "Controller";
-    $newRoute = "Route::resource('" . substr($placeholders['{{ pageUrl }}'], 5) . "', \\{$controllerClass}::class)->only('index', 'create', 'edit', 'store', 'update', 'destroy');";
+    $controllerClass = $placeholders['{{ SubNamespace }}']
+      . "\\"
+      . $placeholders['{{ ModelName }}']
+      . "Controller";
+
+    $newRoute = "    Route::resource('"
+      . substr($placeholders['{{ pageUrl }}'], 5)
+      . "', {$controllerClass}::class)->only('php::resourceMethod');";
+    $newRoute = str_replace("'php::resourceMethod'", '[...$resourceMethod]', $newRoute);
 
     if (File::exists($targetRoutePath)) {
       $routeFileContent = File::get($targetRoutePath);
@@ -590,15 +611,31 @@ protected function appendSidebarMenuEntry(array $placeholders)
     return $jsString;
   }
 
-  protected function convertFormPropertiesArrayToJsString(array $properties): string
+  protected function convertFormPropertiesArrayToJsString(array $properties, int $chunkSize = 2): string
   {
-    $jsString = "[\n";
-    foreach ($properties as $property) {
-      $jsString .= "  [\n";
-      $jsString .= "    " . $this->convertArrayToJsObjectString($property, 4) . "\n";
-      $jsString .= "  ],\n";
+    $chunks = array_chunk($properties, $chunkSize);
+
+    $outerJsString = "[\n";
+    $chunkStrings = [];
+
+    foreach ($chunks as $chunk) {
+      $innerJsString = "  [\n";
+      $itemStrings = [];
+
+      foreach ($chunk as $item) {
+        if (is_array($item)) {
+          $itemStrings[] = $this->convertArrayToJsObjectString($item, 4);
+        }
+      }
+
+      $innerJsString .= implode(",\n", $itemStrings) . "\n";
+      $innerJsString .= "  ]";
+      $chunkStrings[] = $innerJsString;
     }
-    $jsString .= "]";
-    return $jsString;
+
+    $outerJsString .= implode(",\n", $chunkStrings) . "\n";
+    $outerJsString .= "]";
+
+    return $outerJsString;
   }
 }

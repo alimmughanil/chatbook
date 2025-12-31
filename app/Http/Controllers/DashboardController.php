@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
-use App\Models\Doctor;
+use App\Models\Wallet;
 use App\Enums\UserType;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
@@ -16,26 +15,27 @@ class DashboardController extends Controller
    */
   public function __invoke(Request $request)
   {
-    $doctor = null;
 
-    if ($request->cookie('doctor_id')) {
-      $doctor = Doctor::active($request)->first();
+    $user = auth()->user();
+    $balance = Wallet::getUserBalance($user);
+
+    $wallet = [];
+    if ($user->role == UserType::Partner) {
+      $user = $user->load(['wallet' => ['order', 'withdraw']]);
+      $wallet = $user->wallet;
     }
 
     $data = [
       'title' => 'Dashboard',
-      'doctor' => $doctor,
+      'balance' => $balance,
+      'wallet' => $wallet,
+      'isAdmin' => $user->role === UserType::Admin,
     ];
-    $allowedRole = [
-      UserType::Admin,
-      UserType::Editor,
-    ];
-    $user = auth()->user();
-    $data['doctors'] = Doctor::select("id as value", DB::raw("CONCAT(name, ' - ', institute) AS label"))->get();
 
-    if (in_array($user->role, $allowedRole)) {
+    if (in_array($user->role, [UserType::Admin, UserType::Partner])) {
       return Inertia::render('Admin/Dashboard/Index', $data);
     }
+
     return redirect('/');
   }
 }

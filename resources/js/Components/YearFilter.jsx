@@ -1,7 +1,7 @@
 import { router, useForm, usePage } from "@inertiajs/react";
 import DatePicker from "./Form/DatePicker";
 import moment from "moment";
-import { setCookie } from "@/utlis/format";
+import { setCookie } from "@/utils/format";
 
 function YearFilter({name}) {
   const {props} = usePage()

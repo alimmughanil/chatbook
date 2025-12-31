@@ -20,7 +20,7 @@ function BaseForm(props) {
         </label>
       )}
       {children}
-      {errors[name] && (
+      {errors?.[name] && (
         <label className="label">
           <span className="label-text-alt text-error">
             * {errors[name]}

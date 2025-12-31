@@ -3,7 +3,7 @@ import Form from './Form/Form'
 import { useAtomValue } from 'jotai'
 import { disableButtonAtom } from '@/atoms'
 import { useEffect, useState } from 'react'
-import { getBasePageUrl } from '@/utlis/format'
+import { getBasePageUrl } from '@/utils/format'
 
 function FormBuilder(props) {
   const { BackButton = null, SubmitButton = null, wrapperClassName = null } = props

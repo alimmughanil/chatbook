@@ -1,5 +1,5 @@
-import { htmlParse } from "@/utlis/format";
-import useLang from "@/utlis/useLang";
+import { htmlParse } from "@/utils/format";
+import useLang from "@/utils/useLang";
 import { useEffect, useState } from "react";
 
 function SEOEvaluator({ data, keyword, lang }) {

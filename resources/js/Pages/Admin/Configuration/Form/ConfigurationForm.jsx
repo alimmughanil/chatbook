@@ -1,7 +1,7 @@
 import Input from '@/Components/Form/Input'
 import { useForm, usePage } from '@inertiajs/react'
 import TextArea from '@/Components/Form/TextArea'
-import useLang from '@/utlis/useLang'
+import useLang from '@/utils/useLang'
 import { useEffect } from 'react'
 import MultipleInput from '@/Components/Form/MultipleInput'
 import Select from '@/Components/Form/Select'

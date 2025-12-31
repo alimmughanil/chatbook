@@ -1,6 +1,6 @@
 import { FileUploader } from "react-drag-drop-files"
 import BaseForm from "./BaseForm"
-import { mimeType } from "@/utlis/format"
+import { mimeType } from "@/utils/format"
 import { useState } from "react"
 import { Fragment } from "react"
 import { BaseMultipleInput } from "./MultipleInput"
@@ -67,8 +67,6 @@ function FileUploaderInput(props) {
 
   let inputProps = { name, multiple, disabled, maxSize }
   let files = typeof data[name] === 'object' ? data[name] : []
-  console.log(data[name]);
-
 
   return (
     <div className="grid gap-2 w-full z-50">

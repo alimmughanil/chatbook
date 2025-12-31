@@ -3,10 +3,10 @@ import { Link, useForm, usePage } from "@inertiajs/react";
 import Input from "./Form/Input";
 import Select from "./Form/Select";
 import { useState } from "react";
-import useLang from "@/utlis/useLang";
-import { useStatusLabel } from "@/utlis/useStatus";
-import { getBasePageUrl, mimeType, useSearchParams } from "@/utlis/format";
-import useFormChange from "@/utlis/useFormChange";
+import useLang from "@/utils/useLang";
+import { useStatusLabel } from "@/utils/useStatus";
+import { getBasePageUrl, mimeType, useSearchParams } from "@/utils/format";
+import useFormChange from "@/utils/useFormChange";
 
 function RegisterForm({ userData = null }) {
   const { props } = usePage();

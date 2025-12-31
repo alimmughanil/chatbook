@@ -24,6 +24,6 @@ class PasswordController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
-        return redirect(route('profile.index'))->with('success', 'Berhasil mengganti password');
+        return redirect(route('auth.profile.index'))->with('success', 'Berhasil mengganti password');
     }
 }

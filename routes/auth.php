@@ -10,7 +10,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 Route::middleware(['auth'])
   ->name('auth.')
   ->group(function () {
-    Route::resource('/profile', controller: ProfileController::class)->only('index', 'store');
+    Route::resource('/app/profile', controller: ProfileController::class)->only('index', 'store');
     Route::get('/admin', DashboardController::class)->name('dashboard.admin');
     Route::get('/admin/dashboard', DashboardController::class)->name('dashboard.admin.main');
     Route::get('/app/dashboard', DashboardController::class)->name('dashboard.app');

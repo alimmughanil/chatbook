@@ -1,6 +1,6 @@
 import Input from '@/Components/Form/Input'
 import WithModal from '@/Components/WithModal'
-import { mimeType } from '@/utlis/format'
+import { mimeType } from '@/utils/format'
 import { useForm, usePage } from '@inertiajs/react'
 import { useRef } from 'react'
 

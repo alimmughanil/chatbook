@@ -1,0 +1,128 @@
+[
+    {
+        "title": "Kategori",
+        "fa_icon": "fas fa-tags",
+        "icon_provider": "fontawesome",
+        "link": "/admin/categories"
+    },
+    {
+        "title": "Kursus",
+        "fa_icon": "fas fa-book",
+        "icon_provider": "fontawesome",
+        "link": "/admin/courses"
+    },
+    {
+        "title": "Modul",
+        "fa_icon": "fas fa-cubes",
+        "icon_provider": "fontawesome",
+        "link": "/admin/modules"
+    },
+    {
+        "title": "Pelajaran",
+        "fa_icon": "fas fa-file-video",
+        "icon_provider": "fontawesome",
+        "link": "/admin/lessons"
+    },
+    {
+        "title": "Kuis",
+        "fa_icon": "fas fa-question-circle",
+        "icon_provider": "fontawesome",
+        "link": "/admin/quizzes"
+    },
+    {
+        "title": "Pertanyaan",
+        "fa_icon": "fas fa-question",
+        "icon_provider": "fontawesome",
+        "link": "/admin/questions"
+    },
+    {
+        "title": "Jawaban",
+        "fa_icon": "fas fa-check",
+        "icon_provider": "fontawesome",
+        "link": "/admin/answers"
+    },
+    {
+        "title": "Pendaftaran",
+        "fa_icon": "fas fa-user-plus",
+        "icon_provider": "fontawesome",
+        "link": "/admin/enrollments"
+    },
+    {
+        "title": "Progres Pelajaran",
+        "fa_icon": "fas fa-tasks",
+        "icon_provider": "fontawesome",
+        "link": "/admin/lesson_progress"
+    },
+    {
+        "title": "Pengumpulan Kuis",
+        "fa_icon": "fas fa-file-signature",
+        "icon_provider": "fontawesome",
+        "link": "/admin/quiz_submissions"
+    },
+    {
+        "title": "Jawaban Terkumpul",
+        "fa_icon": "fas fa-file-alt",
+        "icon_provider": "fontawesome",
+        "link": "/admin/submission_answers"
+    },
+    {
+        "title": "Review",
+        "fa_icon": "fas fa-star",
+        "icon_provider": "fontawesome",
+        "link": "/admin/feedbacks"
+    },
+    {
+        "title": "Diskusi",
+        "fa_icon": "fas fa-comments",
+        "icon_provider": "fontawesome",
+        "link": "/admin/discussions"
+    },
+    {
+        "title": "Balasan Diskusi",
+        "fa_icon": "fas fa-comment",
+        "icon_provider": "fontawesome",
+        "link": "/admin/discussion_replies"
+    },
+    {
+        "title": "Kontak",
+        "fa_icon": "fas fa-envelope",
+        "icon_provider": "fontawesome",
+        "link": "/admin/contacts"
+    },
+    {
+        "title": "Sertifikat",
+        "fa_icon": "fas fa-certificate",
+        "icon_provider": "fontawesome",
+        "link": "/admin/certificates"
+    },
+    {
+        "title": "Label Sertifikat",
+        "fa_icon": "fas fa-stamp",
+        "icon_provider": "fontawesome",
+        "link": "/admin/certificate_labels"
+    },
+    {
+        "title": "Peserta",
+        "fa_icon": "fas fa-users",
+        "icon_provider": "fontawesome",
+        "link": "/admin/participants"
+    },
+    {
+        "title": "Sertifikat Peserta",
+        "fa_icon": "fas fa-award",
+        "icon_provider": "fontawesome",
+        "link": "/admin/participant_certificates"
+    },
+    {
+        "title": "Pesanan",
+        "fa_icon": "fas fa-shopping-cart",
+        "icon_provider": "fontawesome",
+        "link": "/admin/orders"
+    },
+    {
+        "title": "Pembayaran",
+        "fa_icon": "fas fa-credit-card",
+        "icon_provider": "fontawesome",
+        "link": "/admin/payments"
+    }
+]

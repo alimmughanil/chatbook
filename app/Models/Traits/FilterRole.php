@@ -13,7 +13,7 @@ trait FilterRole
     $tableName = $query->getModel()->getTable();
     $isUserId = Schema::hasColumn($tableName, 'user_id');
 
-    if (in_array(auth()->user()->role, [UserType::Editor]) && $isUserId) {
+    if (in_array(auth()->user()->role, [UserType::Partner]) && $isUserId) {
       $user = auth()->user();
       $query->where("$tableName.user_id", $user->id);
     }

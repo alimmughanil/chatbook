@@ -129,7 +129,12 @@
   }
 }
 
-
+@layer components {
+  .gallery-thumb-left
+    .image-gallery-thumbnails {
+    @apply flex justify-start flex-wrap;
+  }
+}
 
 @layer base {
   * {
@@ -138,4 +143,168 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+}
+
+footer h3 {
+  color: white;
+  margin: 0px 0px 8px 0px;
+}
+
+footer p {
+  color: rgba(229, 219, 219, 1);
+  font-size: 14px;
+  margin: 0px 0px 8px 0px;
+}
+
+button {
+  cursor: pointer;
+}
+
+input:focus {
+  outline: none;
+}
+
+.container {
+  display: flex;
+  padding: 0px 70px;
+}
+
+.logo {
+  width: 140px;
+}
+
+.linear-gradient-purple {
+  background-image: linear-gradient(90deg, rgba(174, 34, 233, 1) 0%, #8333EA);
+}
+
+.linear-gradient-red {
+  background-image: linear-gradient(90deg,
+      rgba(198, 78, 87, 1),
+      rgba(234, 74, 86, 1));
+}
+
+.linear-gradient-blue {
+  background-image: linear-gradient(90deg,
+      rgba(63, 63, 218, 1),
+      rgba(90, 90, 248, 1));
+}
+
+.linear-gradient-orange {
+  background-image: linear-gradient(90deg,
+      rgba(249, 116, 21, 1),
+      rgba(250, 147, 74, 1));
+}
+
+.linear-gradient-purple-btn {
+  background-image: linear-gradient(92.24deg, #7F56D9 -0.57%, #9E77ED 102.08%);
+}
+
+.linear-gradient-yellow {
+  background-image: linear-gradient(92.7deg, #ffa500 2.25%, #f48cd1 96.05%);
+}
+
+
+.transition-max {
+  transition: height 0.4s ease, opacity 0.3s ease;
+  overflow: hidden;
+}
+
+@media only screen and (max-width: 640px) {
+  footer p {
+    font-size: 8px;
+    margin: 0px 0px 8px 0px;
+  }
+}
+
+.swiper {
+  width: 100%;
+  max-width: 1410px;
+  height: 100%;
+}
+
+.input-disabled,
+.input:disabled,
+.input[disabled] {
+    color: #555
+}
+
+body,
+p,
+div,
+span,
+b,
+select,
+input,
+button,
+textarea,
+td,
+tr,
+th,
+table {
+    font-size: 14px;
+}
+
+.dnd.isloading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.dnd .container {
+    display: flex;
+    touch-action: none;
+    margin: 0 -10px;
+}
+
+.dnd .dropzone {
+    flex: 1;
+    height: calc(100vh - 200px);
+}
+
+.dnd .grid-item {
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: block;
+}
+
+.dnd .grid-item-content {
+    box-sizing: border-box;
+    height: 100%;
+    border: 1px #ddd solid;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+}
+
+.dnd .grid-item-content img {
+    touch-action: none;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+}
+
+input[type='number'] {
+    -moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
 }

@@ -4,7 +4,7 @@ import { Head, useForm } from "@inertiajs/react";
 import Input from "@/Components/Form/Input";
 import ShowPasswordButton from "@/Components/ShowPasswordButton";
 import Checkbox from "@/Components/Form/Checkbox";
-import useFormChange from "@/utlis/useFormChange";
+import useFormChange from "@/utils/useFormChange";
 import GoogleAuthButton from "@/Components/GoogleAuthButton";
 
 export default function Login(props) {

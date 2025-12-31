@@ -2,7 +2,7 @@ import WithModal from '@/Components/WithModal'
 import { useForm, usePage } from '@inertiajs/react'
 import { useRef } from 'react'
 import TextArea from '@/Components/Form/TextArea'
-import useFormChange from '@/utlis/useFormChange'
+import useFormChange from '@/utils/useFormChange'
 
 const CancelModal = (state) => {
   const { id, data = null, isLabel = true, content = null, handleClick } = state

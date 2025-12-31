@@ -5,7 +5,7 @@ import WithModal from '@/Components/WithModal'
 import { router, useForm, usePage } from '@inertiajs/react'
 import { useRef } from 'react'
 import { FileUploader } from "react-drag-drop-files";
-import { dateHumanize } from '@/utlis/format'
+import { dateHumanize } from '@/utils/format'
 import { useEffect } from 'react'
 
 const ChatModal = (state) => {

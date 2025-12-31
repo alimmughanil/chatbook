@@ -1,4 +1,4 @@
-import { currency } from "@/utlis/format"
+import { currency } from "@/utils/format"
 import BaseForm from "./BaseForm"
 
 function Input(props) {

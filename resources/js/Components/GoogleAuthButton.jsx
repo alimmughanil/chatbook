@@ -1,14 +1,28 @@
+import { useSearchParams } from "@/utils/format"
 import { usePage } from "@inertiajs/react"
 
 function GoogleAuthButton() {
   const { props } = usePage()
-  const location = new URL(props.location)
-  const params = new URLSearchParams(location.search)
+  const { params } = useSearchParams(props.location)
 
   // return <GoogleAuthModal />
 
+  let authUrl = '/auth/google/redirect'
+  const roles = {
+    'partner': 'partner'
+  }
+  let role = null
+  
+  if (params.get('role')) {
+    role = roles[params.get('role')]
+  }
+
+  if (role) {
+    authUrl += `?role=${role}`
+  }
+
   return (
-    <a href="/auth/google/redirect" className="cursor-pointer">
+    <a href={authUrl} className="cursor-pointer">
       <GoogleAuthIcon />
     </a>
   )
@@ -26,15 +40,15 @@ const GoogleAuthModal = () => {
           <p>Masuk sebagai:</p>
           <div className="flex w-full mt-4 join">
             {location.pathname == "/login" ? (
-              <RedirectButton label="Penyelenggara" role="company" />
+              <RedirectButton label="Freelancer" role="partner" />
             ) : // <RedirectButton label="Penyelenggara Individu" role="seller" />
-            null}
-            {location.pathname == "/login" ? <RedirectButton label="Peserta" role="user" /> : null}
+              null}
+            {location.pathname == "/login" ? <RedirectButton label="Pembeli" role="user" /> : null}
             {location.pathname != "/login" ? (
               <>
-                <RedirectButton label="Penyelenggara" role="company" />
+                <RedirectButton label="Penyelenggara" role="partner" />
                 {/* <RedirectButton label="Penyelenggara Individu" role="seller" /> */}
-                <RedirectButton label="Peserta" role="user" />
+                <RedirectButton label="Pembeli" role="user" />
               </>
             ) : null}
           </div>

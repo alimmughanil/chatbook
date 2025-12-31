@@ -10,5 +10,6 @@ final class PaymentStatusType extends Enum
 {
   const Pending = 'pending';
   const Cancel = 'cancel';
+  const Refund = 'refund';
   const Paid = 'paid';
 }

@@ -17,6 +17,11 @@ return [
     */
 
   'name' => env('APP_NAME', 'Laravel'),
+  'google-site-verification' => env('GOOGLE_SITE_VERIFICATION', ''),
+  'sc_project' => env('SC_PROJECT', 0),
+  'sc_invisible' => env('SC_INVISIBLE', 1),
+  'sc_security' => env('SC_SECURITY', ''),
+
 
   /*
     |--------------------------------------------------------------------------

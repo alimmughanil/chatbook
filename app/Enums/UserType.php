@@ -9,6 +9,6 @@ use BenSampo\Enum\Enum;
 final class UserType extends Enum
 {
   const Admin = 'admin';
-  const Editor = 'editor';
+  const Partner = 'partner';
   const User = 'user';
 }

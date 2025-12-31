@@ -1,4 +1,4 @@
-import { isFunction } from "@/utlis/format"
+import { isFunction } from "@/utils/format"
 import { useRef } from "react"
 import ReactPlayer from "react-player/youtube"
 

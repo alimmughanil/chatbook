@@ -96,6 +96,10 @@ abstract class BaseResourceController extends Controller
 
   public function create(Request $request)
   {
+    $actionPage = $this->beforeActionPage($request, ActionType::Create);
+    if ($actionPage instanceof \Illuminate\Http\RedirectResponse)
+      return $actionPage;
+
     $formData = $this->getFormData($request);
     return $this->inertiaRender("Create", [
       ...$formData,
@@ -115,6 +119,12 @@ abstract class BaseResourceController extends Controller
       return Helper::redirectBack("error", "Data {$this->page["label"]} tidak ditemukan");
     }
 
+    $this->modelInstance = $model;
+
+    $actionPage = $this->beforeActionPage($request, ActionType::Edit);
+    if ($actionPage instanceof \Illuminate\Http\RedirectResponse)
+      return $actionPage;
+
     $authorize = $this->getAuthorize($request, $model, ActionType::Update);
     if ($authorize instanceof \Illuminate\Http\RedirectResponse)
       return $authorize;
@@ -128,7 +138,7 @@ abstract class BaseResourceController extends Controller
       ...$formData,
       "title" => "Edit {$this->page["label"]}",
       "page" => $page,
-      $page["name"] => $model,
+      $page["name"] => $this->modelInstance,
     ];
 
     return $this->inertiaRender("Edit", $data);
@@ -291,6 +301,10 @@ abstract class BaseResourceController extends Controller
 
     $actionLabels = Helper::getEnumTranslation(ActionType::class, "id");
     return Helper::redirectBack("error", "Anda tidak diperbolehkan {$actionLabels[$action]} {$this->page["label"]} ini");
+  }
+  protected function beforeActionPage(Request $request, $action = ActionType::Read)
+  {
+    return null;
   }
 
   /**

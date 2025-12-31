@@ -32,6 +32,7 @@ class ConfigurationController extends Controller
       'PAYMENT_GATEWAY_MODE' => 'toggle',
       'LOGIN_REQUIRED' => 'toggle',
       'UNDER_CONSTRUCTION' => 'toggle',
+      'DUITKU_DISBURSEMENT' => 'toggle',
     ];
 
     $selectOptions = [];
@@ -133,6 +134,10 @@ class ConfigurationController extends Controller
       }
 
       DB::commit();
+      if ($this->hardReload && $request->redirect == 'notification') {
+        return Inertia::location('/admin/config/notification');
+      }
+
       if ($this->hardReload) {
         return Inertia::location('/admin/configuration');
       }
@@ -181,7 +186,7 @@ class ConfigurationController extends Controller
         $deleted->delete();
       }
     }
-    
+
     if (empty($allConfigs))
       return;
 

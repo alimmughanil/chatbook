@@ -33,16 +33,14 @@ const Footer = () => {
             <a href="/app/blog">Blog</a>
           </li>
           <li className="font-normal sm:px-[16px] px-[8px]">
+            <a href="/app/portfolio">Portofolio</a>
+          </li>
+          <li className="font-normal sm:px-[16px] px-[8px]">
             <a href="/app/disclaimer">Disclaimer</a>
           </li>
           <li className="font-normal sm:px-[16px] px-[8px]">
             <a href="/app/privacy">Privacy Policy</a>
           </li>
-          {!!footer?.telegram_group ? (
-            <li className="font-normal sm:pl-[16px] pl-[8px]">
-              <a href={footer?.telegram_group}>Telegram Group</a>
-            </li>
-          ) : null}
         </ul>
       </div>
     </footer>

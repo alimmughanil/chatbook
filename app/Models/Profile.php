@@ -12,4 +12,13 @@ class Profile extends Model
     use HasFactory, Filterable;
     protected $guarded = [];
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(\App\Models\User::class);
+    }
+
+    public function details()
+    {
+        return $this->hasMany(ProfileDetail::class);
+    }
 }

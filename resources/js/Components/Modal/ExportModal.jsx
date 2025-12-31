@@ -1,5 +1,5 @@
 import WithModal from '@/Components/WithModal'
-import useFormBuilder from '@/utlis/useFormBuilder'
+import useFormBuilder from '@/utils/useFormBuilder'
 import { usePage } from '@inertiajs/react'
 import { useRef } from 'react'
 import { FormProperty } from '../FormBuilder'

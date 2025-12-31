@@ -1,6 +1,6 @@
 import WithModal from '@/Components/WithModal'
 import {useRef} from 'react'
-import {dateHumanize, number} from '@/utlis/format'
+import {dateHumanize, number} from '@/utils/format'
 import {useEffect} from 'react'
 
 const RatingShowModal = (state) => {

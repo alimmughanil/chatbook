@@ -9,6 +9,9 @@ const NavigationMenu = () => {
   return (
     <div className='flex flex-wrap justify-center w-full gap-4'>
       <div className='flex flex-wrap justify-center w-full gap-4'>
+        <Link href='/app/service' className={`rounded-full px-[14px] py-[5px] sm:px-[20px] sm:py-[8px] text-white font-normal sm:font-medium text-xs sm:text-sm ${url.startsWith('/app/service') ? 'linear-gradient-purple' : 'linear-gradient-yellow'}`}>
+          Jasa
+        </Link>
         <Link href='/app/category' className={`rounded-full px-[14px] py-[5px] sm:px-[20px] sm:py-[8px] text-white font-normal sm:font-medium text-xs sm:text-sm ${url.startsWith('/app/category') ? 'linear-gradient-purple' : 'linear-gradient-yellow'}`}>
           Kategori
         </Link>

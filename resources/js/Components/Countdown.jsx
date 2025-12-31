@@ -1,4 +1,4 @@
-import { time } from '@/utlis/format';
+import { time } from '@/utils/format';
 import React, { useState, useEffect, useRef } from 'react';
 
 function QuizCountdown({

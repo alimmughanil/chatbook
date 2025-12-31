@@ -1,5 +1,5 @@
 import { Accordion as BaseAccordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/Components/ui/accordion";
-import { isFunction, useSearchParams } from "@/utlis/format";
+import { isFunction, useSearchParams } from "@/utils/format";
 import { usePage } from "@inertiajs/react";
 import { useState } from "react";
 

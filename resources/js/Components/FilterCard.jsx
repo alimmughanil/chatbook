@@ -2,7 +2,7 @@ import { Link, router, usePage } from '@inertiajs/react'
 import FilterItem from './FilterItem'
 import WithModal from '@/Components/WithModal'
 import { useRef } from 'react'
-import { useSearchParams } from '@/utlis/format'
+import { useSearchParams } from '@/utils/format'
 
 const FilterCard = () => {
   const { props } = usePage()

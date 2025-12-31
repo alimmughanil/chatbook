@@ -37,7 +37,7 @@ class MakeCrudsCommand extends Command
       $this->error("Eksekusi tidak dapat dilakukan: Ada file yang belum di-commit. Mohon commit atau stash perubahan Anda terlebih dahulu.");
       return 0;
     }
-    
+
     $migrations = config('crudgenerator.data');
     $isRollback = $this->option('rollback');
 
@@ -70,6 +70,7 @@ class MakeCrudsCommand extends Command
       }
 
       $options['--format'] = true;
+      $options['--namespace'] = $data['namespace'] ?? null;
       $options = array_filter($options, fn($value) => !is_null($value));
 
       $this->call('make:crud', $options);

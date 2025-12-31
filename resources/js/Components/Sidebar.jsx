@@ -134,7 +134,7 @@ export default function AppSidebar({ menu }) {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent side="top" className="w-[--radix-popper-anchor-width]">
                   <DropdownMenuItem>
-                    <Link href="/profile" className="w-full cursor-pointer">
+                    <Link href="/app/profile" className="w-full cursor-pointer">
                       Account
                     </Link>
                   </DropdownMenuItem>

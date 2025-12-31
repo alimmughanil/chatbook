@@ -3,8 +3,8 @@ import Sidebar from "@/Components/Sidebar"
 import { Head, usePage } from "@inertiajs/react"
 import FlashMessage from "@/Components/FlashMessage"
 import { SidebarInset, SidebarProvider } from "@/Components/ui/sidebar"
-import { Home, Users, Settings } from "lucide-react"
-import { getCookie } from "@/utlis/format"
+import { Home, Users, Settings, Rss } from "lucide-react"
+import { getCookie } from "@/utils/format"
 
 function AuthenticatedLayout({ title, children, Breadcrumb = null, auth }) {
   const sidebarMenu = useSidebarMenu()
@@ -16,7 +16,7 @@ function AuthenticatedLayout({ title, children, Breadcrumb = null, auth }) {
       <Sidebar menu={sidebarMenu} />
       <SidebarInset>
         <main className="w-full">
-          <SideNavbar Breadcrumb={Breadcrumb} />
+          <SideNavbar Breadcrumb={Breadcrumb} isNotification={true} />
           <div className="sm:px-4 py-1 w-full">
             <FlashMessage />
             {children}
@@ -33,36 +33,102 @@ const useSidebarMenu = () => {
   let sidebarMenu = [
     {
       title: "Dashboard",
-      fa_icon: "fas fa-tachometer-alt fa-fw",
       icon: Home,
       link: "/admin/dashboard",
     },
     {
       title: "Pengguna",
-      fa_icon: "fas fa-users",
       icon: Users,
       link: "/admin/users",
     },
     {
-      title: "Data Dokter",
-      fa_icon: "fas fa-stethoscope",
-      icon: Stethoscope,
-      link: "/admin/doctors",
+      title: 'Produk',
+      fa_icon: 'fas fa-box-open',
+      icon_provider: 'fontawesome',
+      link: '/admin/product'
     },
     {
-      title: "Data Pasien",
-      fa_icon: "fas fa-hospital-user",
-      icon: Hospital,
-      link: "/admin/patients",
+      title: "Pesanan",
+      fa_icon: "fas fa-shopping-cart",
+      icon_provider: "fontawesome",
+      link: "/admin/order",
+    },
+    {
+      title: 'Rekening Bank',
+      fa_icon: 'fas fa-money-check-dollar',
+      icon_provider: "fontawesome",
+      link: '/admin/bank'
+    },
+    {
+      title: 'Penarikan Dana',
+      fa_icon: 'fas fa-money-bill-transfer',
+      icon_provider: "fontawesome",
+      link: '/admin/withdraw'
+    },
+    {
+      title: "Kategori",
+      fa_icon: "fas fa-tags",
+      icon_provider: "fontawesome",
+      link: "/admin/categories",
+    },
+    {
+      title: 'Tag',
+      fa_icon: 'fas fa-hashtag',
+      icon_provider: 'fontawesome',
+      link: '/admin/tag'
+    },
+    {
+      title: 'Pricing',
+      fa_icon: 'fas fa-tags',
+      icon_provider: 'fontawesome',
+      link: '/admin/pricing'
+    },
+    {
+      title: "Kotak Masuk",
+      fa_icon: "fas fa-envelope",
+      icon_provider: "fontawesome",
+      link: "/admin/contact",
+    },
+    {
+      title: "Blog",
+      icon: Rss,
+      dropdown: [
+        {
+          title: "Kategori Blog",
+          link: "/admin/blog/blog_categories"
+        },
+        {
+          title: "Artikel Blog",
+          link: "/admin/blog/blogs"
+        }
+      ]
+    },
+    {
+      title: "Portofolio",
+      fa_icon: "fas fa-business-time",
+      icon_provider: "fontawesome",
+      dropdown: [
+        {
+          title: "Kategori",
+          link: "/admin/portfolio/category",
+        },
+        {
+          title: "Proyek",
+          link: "/admin/portfolio/project",
+        },
+      ],
     },
     {
       title: "Konfigurasi",
-      fa_icon: "fas fa-gear",
       icon: Settings,
       dropdown: [
         {
           title: "Pengaturan Umum",
           link: "/admin/configuration",
+        },
+        {
+          title: "Daftar Bank",
+          link: "/admin/supported-bank",
         },
       ],
     },
@@ -72,6 +138,17 @@ const useSidebarMenu = () => {
 
   if (["editor"].includes(user?.role)) {
     routes = ["/admin/dashboard"]
+  }
+
+  if (["partner"].includes(user?.role)) {
+    routes = [
+      '/admin/dashboard',
+      '/admin/product',
+      '/admin/order',
+      '/admin/withdraw',
+      '/admin/bank',
+      "/app/profile",
+    ]
   }
 
   if (routes.length > 0) {

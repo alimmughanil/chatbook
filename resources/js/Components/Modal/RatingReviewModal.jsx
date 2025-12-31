@@ -1,9 +1,9 @@
 import WithModal from '@/Components/WithModal'
 import { Link, router, usePage } from '@inertiajs/react'
 import { useRef } from 'react'
-import { dateHumanize, number } from '@/utlis/format'
+import { dateHumanize, number } from '@/utils/format'
 import { useEffect } from 'react'
-import useStatus, { useStatusLabel } from '@/utlis/useStatus'
+import useStatus, { useStatusLabel } from '@/utils/useStatus'
 
 const RatingReviewModal = (state) => {
   const { data: course, ratings, handleClick } = state
