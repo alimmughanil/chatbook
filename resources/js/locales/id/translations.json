@@ -1,0 +1,15 @@
+{
+  "order.pending": "Baru",
+  "order.processing": "Diproses",
+  "order.success": "Berhasil",
+  "order.failed": "Gagal",
+  "order.cancel": "Dibatalkan",
+
+  "payment.pending": "Menunggu Pembayaran",
+  "payment.processing": "Diproses",
+  "payment.success": "Berhasil",
+  "payment.failed": "Gagal",
+  "payment.cancel": "Dibatalkan",
+
+  "last_data": "Data Terakhir"
+}

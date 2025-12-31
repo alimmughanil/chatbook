@@ -1,0 +1,52 @@
+<?php
+
+namespace App\Http\Controllers\{{ SubNamespace }};
+
+use App\Models\{{ ModelName }};
+use App\Utils\Helper;
+use Illuminate\Http\Request;
+use App\Enums\PublishStatusType;
+use App\Http\Controllers\Core\BaseResourceController;
+
+class {{ ModelName }}Controller extends BaseResourceController
+{
+    protected $model = {{ ModelName }}::class;
+
+    protected function indexQuery($query, Request $request)
+    {
+        return $query;
+    }
+
+    protected function getPage(Request $request, $id = null): array
+    {
+        $page =  [
+            "name" => "{{ tableName }}",
+            "inertia" => "{{ AdminPath }}/{{ ModelName }}",
+            "label" => "{{ pageLabel }}",
+            "url" => "/{{ pageUrl }}",
+            "fields" => Helper::getFormFields($this->validation($request)),
+        ];
+
+        return $page;
+    }
+
+    protected function validation(Request $request, $id = null): array
+    {
+        return [
+            "validation" => [
+                {{ validationRules }}
+            ],
+            "default" => [],
+        ];
+    }
+
+    protected function getFormData(Request $request, $model = null): array
+    {
+        $formData = [];
+        
+        return [
+            ...parent::getFormData($request, $model),
+            ...$formData,
+        ];
+    }
+}

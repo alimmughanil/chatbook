@@ -1,0 +1,19 @@
+{
+  "tabWidth": 2,
+  "useTabs": false,
+  "printWidth": 150,
+
+  "semi": false,
+  "singleQuote": false,
+  "trailingComma": "all",
+
+  "overrides": [
+    {
+      "files": ["*.php", "**/*.php"],
+      "options": {
+        "semi": true
+      }
+    }
+  ],
+  "plugins": ["@prettier/plugin-php"]
+}

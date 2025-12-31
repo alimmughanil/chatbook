@@ -1,0 +1,27 @@
+import { useEffect } from 'react';
+import { usePage } from '@inertiajs/react';
+import useFormBuilder from '@/utlis/useFormBuilder';
+import FormBuilder from '@/Components/FormBuilder';
+import { slugify, useSearchParams } from '@/utlis/format';
+
+function MainForm({ isEdit = false, formOptions = {}, BackButton = null }) {
+    const formConfig = { isEdit, getProperties, formOptions }
+    const builderProps = useFormBuilder(formConfig);
+    const { data, setData } = builderProps.form;
+
+{{ useEffectHooks }}
+    return (
+        <FormBuilder {...builderProps} BackButton={BackButton} />
+    );
+}
+
+const getProperties = (state) => {
+    const { props, data, setData } = state;
+    const { params } = useSearchParams(props.location);
+
+    const properties = {{ formProperties }};
+
+    return properties;
+}
+
+export default MainForm;

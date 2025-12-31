@@ -1,0 +1,31 @@
+{
+  "contact.new": "whitespace-pre text-white bg-blue-600 hover:bg-blue-700",
+  "contact.process": "whitespace-pre text-white bg-yellow-600 hover:bg-yellow-700",
+  "contact.finish": "whitespace-pre text-white bg-green-600 hover:bg-green-700",
+  "contact.cancel": "whitespace-pre text-white bg-red-600 hover:bg-red-700",
+
+  "gender.male": "whitespace-pre text-white bg-blue-600",
+  "gender.female": "whitespace-pre text-white bg-pink-600",
+
+  "order.pending": "whitespace-pre text-white bg-yellow-600 hover:bg-yellow-700",
+  "order.processing": "whitespace-pre text-white bg-blue-600 hover:bg-blue-700",
+  "order.success": "whitespace-pre text-white bg-green-600 hover:bg-green-700",
+  "order.failed": "whitespace-pre text-white bg-red-600 hover:bg-red-700",
+  "order.cancel": "whitespace-pre text-white bg-gray-600 hover:bg-gray-700",
+
+  "payment.pending": "whitespace-pre text-white bg-yellow-600 bg-opacity-90 hover:bg-yellow-700",
+  "payment.processing": "whitespace-pre text-white bg-blue-600 bg-opacity-90 hover:bg-blue-700",
+  "payment.success": "whitespace-pre text-white bg-green-600 bg-opacity-90 hover:bg-green-700",
+  "payment.failed": "whitespace-pre text-white bg-red-600 bg-opacity-90 hover:bg-red-700",
+  "payment.cancel": "whitespace-pre text-white bg-gray-600 bg-opacity-90 hover:bg-gray-700",
+
+  "visibility.public": "whitespace-pre text-white bg-purple-600 hover:bg-purple-700",
+  "visibility.private": "whitespace-pre text-white bg-red-600 hover:bg-red-700",
+
+  "feedback.sent": "whitespace-pre bg-yellow-900 px-3 border-none text-white",
+  "feedback.delivery": "whitespace-pre bg-purple-900 px-3 border-none text-white",
+  "feedback.read": "whitespace-pre bg-green-600 px-3 border-none text-white",
+  "feedback.hidden": "whitespace-pre bg-red-600 px-3 border-none text-white",
+
+  "last_data": "whitespace-pre text-white bg-gray-800 hover:bg-gray-900"
+}

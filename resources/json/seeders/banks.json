@@ -1,0 +1,552 @@
+[
+  {
+    "bank_code": "002",
+    "bank_name": "Bank BRI",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "008",
+    "bank_name": "Bank Mandiri",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "009",
+    "bank_name": "Bank BNI",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "011",
+    "bank_name": "Bank Danamon",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "013",
+    "bank_name": "Bank Permata",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "014",
+    "bank_name": "Bank Central Asia",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "016",
+    "bank_name": "Bank Maybank Indonesia",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "019",
+    "bank_name": "Bank Panin",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "022",
+    "bank_name": "CIMB Niaga",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "023",
+    "bank_name": "Bank UOB Indonesia",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "028",
+    "bank_name": "Bank OCBC NISP",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "031",
+    "bank_name": "Citi Bank",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "036",
+    "bank_name": "Bank CCB (Ex-Bank Windu Kentjana)",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "037",
+    "bank_name": "Bank Artha Graha",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "042",
+    "bank_name": "MUFG Bank",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "046",
+    "bank_name": "Bank DBS",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "050",
+    "bank_name": "Standard Chartered Bank",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "054",
+    "bank_name": "Bank Capital",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "061",
+    "bank_name": "ANZ Indonesia",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "069",
+    "bank_name": "Bank Of China Indonesia",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "076",
+    "bank_name": "Bank Bumi Arta",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "087",
+    "bank_name": "Bank HSBC Indonesia",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "095",
+    "bank_name": "Bank JTrust Indonesia",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "097",
+    "bank_name": "Bank Mayapada",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "110",
+    "bank_name": "Bank BJB",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "111",
+    "bank_name": "Bank DKI",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "112",
+    "bank_name": "Bank BPD DIY",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "113",
+    "bank_name": "Bank Jateng",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "114",
+    "bank_name": "Bank Jatim",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "115",
+    "bank_name": "Bank Jambi",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "116",
+    "bank_name": "Bank Aceh",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "117",
+    "bank_name": "Bank Sumut",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "118",
+    "bank_name": "Bank Nagari",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "119",
+    "bank_name": "Bank Riau Kepri",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "120",
+    "bank_name": "Bank Sumsel Babel",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "121",
+    "bank_name": "Bank Lampung",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "122",
+    "bank_name": "Bank Kalsel",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "123",
+    "bank_name": "Bank Kalbar",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "124",
+    "bank_name": "Bank Kaltimtara",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "125",
+    "bank_name": "Bank Kalteng",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "126",
+    "bank_name": "Bank Sulselbar",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "127",
+    "bank_name": "Bank Sulut Go",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "128",
+    "bank_name": "Bank NTB Syariah",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "129",
+    "bank_name": "Bank BPD Bali",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "130",
+    "bank_name": "Bank NTT",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "131",
+    "bank_name": "Bank Maluku Malut",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "132",
+    "bank_name": "Bank Papua",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "133",
+    "bank_name": "Bank Bengkulu",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "134",
+    "bank_name": "Bank Sulteng",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "135",
+    "bank_name": "Bank Sultra",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "137",
+    "bank_name": "Bank Banten",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "146",
+    "bank_name": "Bank Of India Indonesia",
+    "bi_fast": false
+  },
+  {
+    "bank_code": "147",
+    "bank_name": "Bank Muamalat Indonesia",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "151",
+    "bank_name": "Bank Mestika",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "152",
+    "bank_name": "Bank Shinhan Indonesia",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "153",
+    "bank_name": "Bank Sinarmas",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "157",
+    "bank_name": "Bank Maspion Indonesia",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "161",
+    "bank_name": "Bank Ganesha",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "164",
+    "bank_name": "Bank ICBC Indonesia",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "167",
+    "bank_name": "Bank QNB Indonesia",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "200",
+    "bank_name": "Bank BTN",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "212",
+    "bank_name": "Bank Woori Saudara",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "213",
+    "bank_name": "Bank BTPN",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "405",
+    "bank_name": "Bank Victoria Syariah",
+    "bi_fast": false
+  },
+  {
+    "bank_code": "425",
+    "bank_name": "Bank BJB Syariah",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "426",
+    "bank_name": "Bank Mega",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "441",
+    "bank_name": "Bank KB Bukopin",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "451",
+    "bank_name": "Bank Syariah Indonesia",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "459",
+    "bank_name": "Bank KROOM",
+    "bi_fast": false
+  },
+  {
+    "bank_code": "472",
+    "bank_name": "Bank Jasa Jakarta",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "484",
+    "bank_name": "Bank KEB Hana",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "485",
+    "bank_name": "MNC Bank",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "490",
+    "bank_name": "Bank Neo Commerce",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "494",
+    "bank_name": "Bank BRI Agroniaga",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "498",
+    "bank_name": "Bank SBI",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "501",
+    "bank_name": "Bank Digital BCA",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "503",
+    "bank_name": "Bank Nobu",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "506",
+    "bank_name": "Bank Mega Syariah",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "513",
+    "bank_name": "Bank Ina Perdana",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "517",
+    "bank_name": "Bank Panin Dubai Syariah",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "520",
+    "bank_name": "Bank Prima Master",
+    "bi_fast": false
+  },
+  {
+    "bank_code": "521",
+    "bank_name": "Bank Syariah Bukopin",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "523",
+    "bank_name": "Bank Sahabat Sampoerna",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "526",
+    "bank_name": "Bank Oke Indonesia",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "531",
+    "bank_name": "AMAR BANK",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "535",
+    "bank_name": "SEA Bank",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "536",
+    "bank_name": "Bank BCA Syariah",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "542",
+    "bank_name": "Bank Jago",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "547",
+    "bank_name": "Bank BTPN Syariah",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "548",
+    "bank_name": "Bank Multiarta Sentosa",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "553",
+    "bank_name": "Bank Mayora",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "555",
+    "bank_name": "Bank Index Selindo",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "562",
+    "bank_name": "Superbank (FAMA)",
+    "bi_fast": false
+  },
+  {
+    "bank_code": "564",
+    "bank_name": "Bank Mantap",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "566",
+    "bank_name": "Bank Victoria International",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "567",
+    "bank_name": "Allo Bank",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "600",
+    "bank_name": "BPR SUPRA",
+    "bi_fast": false
+  },
+  {
+    "bank_code": "688",
+    "bank_name": "BPR KS",
+    "bi_fast": false
+  },
+  {
+    "bank_code": "699",
+    "bank_name": "BPR EKA",
+    "bi_fast": false
+  },
+  {
+    "bank_code": "789",
+    "bank_name": "IMkas",
+    "bi_fast": false
+  },
+  {
+    "bank_code": "911",
+    "bank_name": "LinkAja",
+    "bi_fast": false
+  },
+  {
+    "bank_code": "945",
+    "bank_name": "Bank Agris",
+    "bi_fast": false
+  },
+  {
+    "bank_code": "947",
+    "bank_name": "Bank Aladin Syariah",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "949",
+    "bank_name": "Bank CTBC",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "950",
+    "bank_name": "Bank Commonwealth",
+    "bi_fast": true
+  },
+  {
+    "bank_code": "1010",
+    "bank_name": "OVO",
+    "bi_fast": false
+  },
+  {
+    "bank_code": "1011",
+    "bank_name": "Gopay",
+    "bi_fast": false
+  },
+  {
+    "bank_code": "1012",
+    "bank_name": "DANA",
+    "bi_fast": false
+  },
+  {
+    "bank_code": "1013",
+    "bank_name": "Shopeepay",
+    "bi_fast": false
+  },
+  {
+    "bank_code": "1014",
+    "bank_name": "LinkAja Direct",
+    "bi_fast": false
+  }
+]
