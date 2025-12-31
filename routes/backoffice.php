@@ -26,6 +26,7 @@ Route::middleware(['auth', "role: " . implode("|", [UserType::Admin])])
     Route::resource('pricing', Admin\PricingController::class)->only([...$resourceMethod]);
     Route::resource('supported-bank', Admin\SupportedBankController::class)->only([...$resourceMethod]);
     Route::resource('transactions', Admin\TransactionController::class)->only([...$resourceMethod]);
+    Route::post('api/transaction/{phone}/n8n', [Admin\TransactionController::class, 'webhook'])->withoutMiddleware(['auth', 'csrf']);
 
     Route::resource('portfolio/project', Admin\PortfolioProjectController::class)->only([...$resourceMethod, 'show']);
     Route::resource('portfolio/category', controller: Admin\PortfolioCategoryController::class)->only([...$resourceMethod]);
