@@ -17,13 +17,8 @@ class DashboardController extends Controller
   {
 
     $user = auth()->user();
-    $balance = Wallet::getUserBalance($user);
-
+    $balance = null;
     $wallet = [];
-    if ($user->role == UserType::Partner) {
-      $user = $user->load(['wallet' => ['order', 'withdraw']]);
-      $wallet = $user->wallet;
-    }
 
     $data = [
       'title' => 'Dashboard',
