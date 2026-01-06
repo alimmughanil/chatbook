@@ -12,16 +12,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-  use HasFactory, Filterable, SelectOptions, SoftDeletes;
-  protected $guarded = [];
+    use HasFactory, Filterable, SelectOptions, SoftDeletes;
+    protected $guarded = [];
 
-  public function parent(): BelongsTo
-  {
-    return $this->belongsTo(\App\Models\Category::class, 'parent_id')->withTrashed();
-  }
+    public function product(): HasMany
+    {
+        return $this->hasMany(\App\Models\Product::class);
+    }
 
-  public function children(): HasMany
-  {
-    return $this->hasMany(\App\Models\Category::class, 'parent_id')->withTrashed();
-  }
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(\App\Models\Category::class, 'parent_id')->withTrashed();
+    }
+
+    public function children(): HasMany
+    {
+        return $this->hasMany(\App\Models\Category::class, 'parent_id')->withTrashed();
+    }
 }

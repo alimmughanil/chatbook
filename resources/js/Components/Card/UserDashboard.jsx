@@ -112,9 +112,9 @@ export const CourseCardList = ({ course, onClick = null }) => {
   const handleClick = (isModal = false) => {
     if (isModal) {
       setShow(course)
-      return 
+      return
     }
-    
+
     isFunction(onClick) && onClick(course)
   }
 
@@ -366,6 +366,53 @@ export const OrderCardList = ({ item, onClick = null }) => {
               "
             >
               Lihat Detail Order
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const TransactionCardList = ({ item, onClick = null }) => {
+  return (
+    <div
+      className="group bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg hover:border-primary/30 transition-all duration-300 flex flex-col md:flex-row w-full cursor-pointer"
+      onClick={() => isFunction(onClick) && onClick(item)}
+    >
+      <div className="p-5 flex flex-col flex-1 justify-between">
+        <div className="mb-4">
+          <div className="flex justify-between items-start">
+            <h3 className="font-bold text-slate-900 lg:text-lg leading-snug line-clamp-2 group-hover:text-primary transition-colors">
+              {item.shop_name || 'Transaksi'} {item.description ? `- ${item.description}` : ''}
+            </h3>
+            <span className={`px-2 py-1 rounded text-xs font-bold uppercase tracking-wider ${item.type === 'income' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+              {item.type === 'income' ? 'Masuk' : 'Keluar'}
+            </span>
+          </div>
+
+          <p className="text-sm text-gray-500 mt-2 line-clamp-2">
+            {item.category?.name ?? 'Tanpa Kategori'}
+          </p>
+          <p className="text-xs text-gray-400 mt-1">
+            {item.date}
+          </p>
+        </div>
+
+        <div className="mt-auto">
+          <div className="flex justify-between items-center text-xs text-gray-500 mb-2">
+            <span className="font-bold text-lg text-slate-700">{currency(item.amount)}</span>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-4 items-end sm:items-center">
+            <button
+              onClick={() => onClick(item)}
+              className="
+                w-full sm:w-auto px-6 py-2 rounded-lg text-sm font-semibold transition-all border whitespace-nowrap
+                bg-primary text-white border-transparent hover:bg-primary/90 shadow-md shadow-primary/20
+              "
+            >
+              Lihat Detail
             </button>
           </div>
         </div>

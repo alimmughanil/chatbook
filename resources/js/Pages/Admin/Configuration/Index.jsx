@@ -6,7 +6,7 @@ import ConfigurationForm from './Form/ConfigurationForm'
 import useLinkTabs from '@/utils/useLinkTabs'
 
 function Index(props) {
-  const { url } = usePage()  
+  const { url } = usePage()
   const { data, setData, post, processing } = useForm(props.configurations)
 
   const handleSubmit = (e) => {

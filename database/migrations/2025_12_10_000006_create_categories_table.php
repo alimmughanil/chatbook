@@ -17,6 +17,9 @@ return new class extends Migration {
       $table->string('type')->default(CategoryType::Product)->index();
       $table->longText('thumbnail')->nullable();
       $table->longText('description')->nullable();
+      $table->boolean('is_thumbnail_icon')->default(false);
+      $table->boolean('is_active')->default(true);
+      $table->boolean('is_featured')->default(false);
       $table->timestamps();
       $table->softDeletes();
     });
