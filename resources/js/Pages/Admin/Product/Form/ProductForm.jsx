@@ -12,7 +12,6 @@ function ProductForm({ isEdit = false }) {
     name: product?.name ?? '',
     slug: product?.slug ?? '',
     category_id: product?.category_id ?? '',
-    assigned_user_id: product?.assigned_user_id ?? '',
     price: product?.price ?? '',
     status: product?.status ?? props.status[0],
     description: product?.description ?? '',
@@ -21,7 +20,6 @@ function ProductForm({ isEdit = false }) {
     is_featured: product?.is_featured ?? '',
     keywords: product?.keywords ?? '',
     meta_description: product?.meta_description ?? '',
-    tags: '',
   })
 
   function handleChange(e) {
@@ -57,10 +55,6 @@ function ProductForm({ isEdit = false }) {
   if (props.categories.length > 0) {
     categoryIndex = data.category_id ? props.categories.findIndex((option) => option.value == data.category_id) : null
   }
-  let assignedIdx = null;
-  if (props.partner.length > 0) {
-    assignedIdx = data.assigned_user_id ? props.partner.findIndex((option) => option.value == data.assigned_user_id) : null
-  }
   return (
     <form className='flex flex-col items-center justify-center w-full gap-4 p-4 border rounded-lg shadow-lg'>
       <p className='text-lg font-semibold'>{props.title}</p>
@@ -82,31 +76,6 @@ function ProductForm({ isEdit = false }) {
           errors={errors}
           defaultValue={props.categories[categoryIndex]}
           options={props.categories}
-        />
-        {isAdmin && (
-          <Select
-            isReactSelect={true}
-            name='assigned_user_id'
-            label='Assign User'
-            isDisabled={props?.product && props?.product?.user_id !== 1}
-            handleChange={(e) => setData('assigned_user_id', e?.value)}
-            data={data}
-            errors={errors}
-            defaultValue={props.partner[assignedIdx]}
-            options={props.partner}
-          />
-        )}
-        <Select
-          isReactSelect={true}
-          isMulti={true}
-          name='tag_id'
-          label='Tag'
-          alt={isAdmin && <AddButton path="tag" />}
-          handleChange={(e) => setData("tags", e ? JSON.stringify(e) : null)}
-          data={data}
-          errors={errors}
-          defaultValue={props.productTags}
-          options={props.tags}
         />
       </div>
       <div className='flex flex-col w-full gap-4 md:flex-row'>

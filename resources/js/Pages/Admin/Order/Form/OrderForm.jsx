@@ -7,13 +7,11 @@ import { useEffect } from 'react'
 function OrderForm({ order = null }) {
   const { props } = usePage()
   const params = new URLSearchParams(location.search)
-  const { products, packages, users, customs } = props
+  const { products, users } = props
 
   const { data, setData, post, errors, processing } = useForm({
     user_id: 'other',
     product_id: params.get('product_id'),
-    product_detail_id: '',
-    is_custom: params.get('is_custom') ?? 0,
     name: '',
     email: '',
     phone: '',
@@ -52,7 +50,7 @@ function OrderForm({ order = null }) {
     })
   }
   const productIndex = params.get('product_id') ? products.findIndex((product) => product.value == params.get('product_id')) : null
-  const customIndex = params.get('is_custom') ? customs.findIndex((custom) => custom.value == params.get('is_custom')) : 1
+
 
   return (
     <form className='flex flex-col items-center justify-center w-full gap-4 p-4 border rounded-lg shadow-lg'>
@@ -69,31 +67,6 @@ function OrderForm({ order = null }) {
           defaultValue={products[productIndex]}
           options={products}
         />
-        {params.get('product_id') ? (
-          <>
-            <Select
-              isReactSelect={true}
-              name='is_custom'
-              label='Custom?'
-              alt={<p className='leading-6 text-white'>*</p>}
-              handleChange={(e) => (handleSelected(e, 'is_custom'))}
-              data={data}
-              errors={errors}
-              defaultValue={customs[customIndex]}
-              options={customs}
-            />
-            <Select
-              isReactSelect={true}
-              name='product_detail_id'
-              label='Paket'
-              alt={<AddButton path={`/admin/product/${data.product_id}?show=packet&create=true&is_custom=${data.is_custom}&ref=${location}`} />}
-              handleChange={(e) => setData('product_detail_id', e?.value)}
-              data={data}
-              errors={errors}
-              options={packages}
-            />
-          </>
-        ) : null}
       </div>
       <div className='flex flex-col w-full gap-4 md:flex-row z-30'>
         <Select

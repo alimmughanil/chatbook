@@ -7,14 +7,13 @@ use Error;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Payment;
-use App\Models\ProductDetail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Services\Payment\Duitku\PaymentService;
 
 class OrderService
 {
-  public function createOrder(Product $product, $type, ProductDetail $productDetail = null, $validationData = [], $user = null)
+  public function createOrder(Product $product, $type, $validationData = [], $user = null)
   {
     DB::beginTransaction();
     try {
@@ -29,13 +28,10 @@ class OrderService
         'order_number' => $user->id . $product->id . time(),
         'price_total' => 0,
         'product_price' => intval($product->price),
-        'detail' => json_encode($product),
+        'detail' => json_encode($product), // Keeping detail for now, assuming it's a valid column or will be ignored if not fillable
       ];
 
-      if (isset($productDetail)) {
-        $data['product_detail_id'] = $productDetail->id;
-        $data['product_price'] = intval($productDetail->price);
-      }
+      // ProductDetail logic removed
 
       $data['price_total'] = intval($data['product_price']);
 

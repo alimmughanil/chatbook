@@ -7,9 +7,6 @@ import DetailModal from "@/Components/Modal/DetailModal"
 import DetailModalContent from "@/Components/Default/DetailModalContent"
 import { useAtom } from "jotai"
 import { showModalAtom } from "@/atoms"
-import CancelModal from "./Modal/CancelModal"
-import SubmitModal from "./Modal/SubmitModal"
-import HistoryModal from "./Modal/HistoryModal"
 import useStatus, { useStatusLabel } from "@/utils/useStatus"
 import CopyToClipboard from "@/Components/CopyToClipboard"
 import RowLabel from "@/Components/RowLabel"
@@ -57,14 +54,7 @@ const TableIndex = (tableProps) => {
                   <span>Lihat Detail</span>
                 </ModalButton>
               </li>
-              <li><ModalButton
-                disabled={data?.status !== 'processing' || data?.work_status === 'work.finish.request'}
-                id={`modal_submit_${data?.id}`}
-                btnLabel={data?.work_status == 'work.revision.request' ? 'Submit Revisi' : 'Submit Pekerjaan'}
-                onClick={() => handleShow(data)} /></li>
-              <li><ModalButton disabled={data?.status === 'pending'} id={`modal_history_${data?.id}`} btnLabel={'Riwayat Pekerjaan'} onClick={() => handleShow(data)} /></li>
               <li><button disabled={!data?.user?.phone} onClick={() => window.open(`https://wa.me/${whatsappNumber(data?.user?.phone)}`, '_blank')} className="disabled:opacity-50">Hubungi Klien</button></li>
-              <li><ModalButton disabled={data?.status !== 'processing'} id={`modal_cancel_${data?.id}`} btnLabel={'Ajukan Pembatalan'} className='disabled:opacity-50 text-red-600' onClick={() => handleShow(data)} /></li>
             </ul>
           </div>
         )}
@@ -73,9 +63,6 @@ const TableIndex = (tableProps) => {
 
       {show ? (
         <>
-          <CancelModal data={show} handleClick={() => handleShow(null)} />
-          <SubmitModal data={show} handleClick={() => handleShow(null)} />
-          <HistoryModal data={show} handleClick={() => handleShow(null)} />
           <DetailModal
             id={show?.id}
             tableHeader={tableHeader}
@@ -137,41 +124,12 @@ const useTableHeader = () => {
         <td>
           <div className='flex flex-col'>
             <div className={`capitalize mb-1 badge ${useStatus('payment.' + data?.payment?.status)}`}>{useStatusLabel('payment.' + data?.payment?.status)}</div>
-            <div className={`capitalize badge ${useStatus('order.' + data?.status)}`}>{useStatusLabel(data?.work_status ?? 'order.' + data?.status)}</div>
+            <div className={`capitalize badge ${useStatus('order.' + data?.status)}`}>{useStatusLabel(data?.status)}</div>
           </div>
         </td>
       )
     },
-    {
-      label: 'Status Pekerjaan',
-      isDetail: false,
-      custom: ({ data }) => (
-        <td>
-          {data?.last_work ? (
-            <div className={`capitalize mb-1 badge ${useStatus(`work.${data?.last_work?.type}.${data?.last_work?.status}`)}`}>{useStatusLabel(`work.${data?.last_work?.type}.${data?.last_work?.status}`)}</div>
-          ) : (
-            '-'
-          )}
-        </td>
-      )
-    },
-    {
-      label: 'Status Pekerjaan',
-      isDetail: true,
-      custom: ({ header, data, defaultClassName }) => {
-        return (
-          <td>
-            <RowLabel label={header.label} {...defaultClassName}>
-              {data?.last_work ? (
-                <div className={`capitalize mb-1 badge ${useStatus(`work.${data?.last_work?.type}.${data?.last_work?.status}`)}`}>{useStatusLabel(`work.${data?.last_work?.type}.${data?.last_work?.status}`)}</div>
-              ) : (
-                '-'
-              )}
-            </RowLabel>
-          </td>
-        )
-      }
-    },
+
     {
       label: 'Status Pesanan',
       value: 'status',
@@ -215,7 +173,7 @@ const useTableHeader = () => {
         let whatsappUrl = null
 
         if (order?.user?.phone) {
-          let whatsappText = `Halo ${order.user.name}, terima kasih telah memesan ${order?.product?.name} ${order?.product_detail ? `dengan Paket ${order?.product_detail?.name}` : ''}. `
+          let whatsappText = `Halo ${order.user.name}, terima kasih telah memesan ${order?.product?.name}. `
           if (order.status == 'success') {
             whatsappText += `Kami akan segera memproses pesanan anda.`
           } else {

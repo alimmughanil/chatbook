@@ -1,12 +1,11 @@
 import { useForm } from '@inertiajs/react';
-import HomeLayout from '@/Layouts/HomeLayout'; 
+import HomeLayout from '@/Layouts/HomeLayout';
 import { ArrowRight, Package, AlertCircle, Lock } from 'lucide-react';
 import { currency } from '@/utils/format';
 
-export default function Create({ auth, product, package: packageDetail, errors }) {
+export default function Create({ auth, product, errors }) {
   const { data, setData, post, processing } = useForm({
     product_id: product.id,
-    product_detail_id: packageDetail.id,
     note: '',
   });
 
@@ -45,15 +44,15 @@ export default function Create({ auth, product, package: packageDetail, errors }
                     <h3 className="font-bold text-gray-900 text-lg">{product.name}</h3>
                     <div className="flex items-center gap-2 mt-1 text-sm text-gray-500">
                       <Package size={14} />
-                      <span>Paket: <span className="font-semibold text-[#6017BE]">{packageDetail.name}</span></span>
+                      <span>Produk: <span className="font-semibold text-[#6017BE]">{product.name}</span></span>
                     </div>
                   </div>
                 </div>
                 <div className="p-6 bg-gray-50/50">
-                  <p className="text-sm font-semibold text-gray-700 mb-2">Detail Paket:</p>
+                  <p className="text-sm font-semibold text-gray-700 mb-2">Deskripsi Produk:</p>
                   <div
                     className="text-sm text-gray-600 prose prose-sm max-w-none"
-                    dangerouslySetInnerHTML={{ __html: packageDetail.description }}
+                    dangerouslySetInnerHTML={{ __html: product.description }}
                   />
                 </div>
               </div>
@@ -78,8 +77,8 @@ export default function Create({ auth, product, package: packageDetail, errors }
 
                 <div className="space-y-3 mb-6 border-b border-gray-100 pb-6">
                   <div className="flex justify-between text-sm text-gray-600">
-                    <span>Harga Paket</span>
-                    <span>{currency(packageDetail.price)}</span>
+                    <span>Harga Produk</span>
+                    <span>{currency(product.price)}</span>
                   </div>
                   <div className="flex justify-between text-sm text-gray-600">
                     <span>Biaya Layanan</span>
@@ -93,7 +92,7 @@ export default function Create({ auth, product, package: packageDetail, errors }
 
                 <div className="flex justify-between items-center mb-6">
                   <span className="font-bold text-gray-900">Total Bayar</span>
-                  <span className="font-bold text-xl text-[#6017BE]">{currency(packageDetail.price)}</span>
+                  <span className="font-bold text-xl text-[#6017BE]">{currency(product.price)}</span>
                 </div>
 
                 <button

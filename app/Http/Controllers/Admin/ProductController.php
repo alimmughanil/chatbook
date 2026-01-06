@@ -2,27 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Tag;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Utils\Helper;
 use App\Enums\UserType;
 use App\Models\Product;
-use App\Enums\ImageType;
 use App\Models\Category;
 use App\Enums\ActionType;
-use App\Models\ProductTag;
-use App\Models\Notification;
 use Illuminate\Http\Request;
-use App\Models\ProductDetail;
 use App\Enums\OriginStatusType;
 use App\Enums\ProductStatusType;
-use App\Constants\NotifConstants;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Core\BaseResourceController;
-use App\Http\Controllers\Api\NotificationApiController;
 
 class ProductController extends BaseResourceController
 {
@@ -43,10 +36,10 @@ class ProductController extends BaseResourceController
 
   protected function indexQuery($query, Request $request)
   {
-    $query->with('category', 'user', 'assignedUser')
+    $query->with('category', 'user')
       ->when(auth()->user()->role == UserType::Partner, function ($query) use ($request) {
         $user = auth()->user();
-        $query->where('user_id', $user->id)->orWhere('assigned_user_id', $user->id);
+        $query->where('user_id', $user->id);
       })
       ->when($request->filled('addedBy'), function ($query) use ($request) {
         $query->where('user_id', $request->addedBy);
@@ -84,7 +77,6 @@ class ProductController extends BaseResourceController
 
     return [
       ...parent::indexData($request, $isFormData),
-      'partner' => $partner,
       'categories' => $categories,
       'isAdmin' => auth()->user()->role == UserType::Admin
     ];
@@ -104,7 +96,6 @@ class ProductController extends BaseResourceController
         'status' => 'nullable',
         'is_featured' => 'nullable',
         'sort_number' => 'nullable',
-        'tags' => 'nullable',
         'keywords' => 'nullable',
         'meta_description' => 'nullable',
       ],
@@ -118,25 +109,15 @@ class ProductController extends BaseResourceController
   {
     $categories = Category::selectOptions()->get();
     $partner = User::partner()->selectOptions()->get();
-    $tags = Tag::selectOptions("id", "title")->get();
 
-    $productTags = [];
-    if ($model) {
-      $productTags = ProductTag::where('product_id', $model->id)->with('tag')->get();
-      $productTags = $productTags->map(fn($productTag) => ([
-        'id' => $productTag->id,
-        'value' => $productTag->tag->id,
-        'label' => $productTag->tag->title,
-      ]))->toArray();
-    }
+    // ProductTags logic removed
+    // $productTags = ...
+
 
     return [
       ...parent::getFormData($request, $model),
       'status' => array_values(ProductStatusType::asArray()),
       'categories' => $categories,
-      'partner' => $partner,
-      'tags' => $tags,
-      'productTags' => $productTags,
       'isAdmin' => auth()->user()->role == UserType::Admin
     ];
   }
@@ -166,9 +147,6 @@ class ProductController extends BaseResourceController
 
     $user = auth()->user();
     $validatedData['user_id'] = $user->id;
-    if ($user->role == UserType::Partner) {
-      $validatedData['assigned_user_id'] = $user->id;
-    }
 
     if ($this->modelInstance) {
       $validatedData['user_id'] = $this->modelInstance->user_id;
@@ -189,19 +167,7 @@ class ProductController extends BaseResourceController
 
   protected function afterSave($model, Request $request)
   {
-    $tags = json_decode($request->tags, true);
-    if (!empty($tags)) {
-      $model->productTag()->delete();
-      $tags = collect($tags)->map(function ($tag) use ($model) {
-        return [
-          'product_id' => $model->id,
-          'tag_id' => $tag['value'],
-          'created_at' => now(),
-          'updated_at' => now(),
-        ];
-      })->toArray();
-      ProductTag::insert($tags);
-    }
+      // Tags removed
   }
 
   protected function inertiaRedirect(Request $request, $type)
@@ -218,24 +184,16 @@ class ProductController extends BaseResourceController
 
   public function show($id, Request $request)
   {
-    $product = Product::with('category', 'image', 'productTag.tag')->whereId($id)->first();
+    $product = Product::with('category', 'image')->whereId($id)->first();
     if (!$product)
       return redirect('/admin/product');
 
     $user = auth()->user();
-    if ($user->role == UserType::Partner && $product->user_id != $user->id && $product->assigned_user_id != $user->id) {
+    if ($user->role == UserType::Partner && $product->user_id != $user->id) {
       return redirect('/admin/product')->with('error', 'Anda tidak diperbolehkan mengedit produk ini');
     }
 
     $categories = Category::get();
-    $partner = User::partner()->get();
-    $productDetail = ProductDetail::where('product_id', $id)->get();
-    $tags = $product->productTag->map(function ($productTag) {
-      return [
-        'product_tag_id' => $productTag->id,
-        'title' => $productTag->tag->title,
-      ];
-    });
 
     $images = [];
 
@@ -244,54 +202,26 @@ class ProductController extends BaseResourceController
         'ref' => 'product',
         'id' => $product->id,
         'name' => $product?->name,
-        'type' => ImageType::File,
+        'type' => 'file',
         'file' => $product->thumbnail,
       ];
       array_push($images, $image);
     }
 
-    foreach ($product->productDetail as $detail) {
-      if ($detail->thumbnail) {
-        $image = [
-          'ref' => 'detail',
-          'id' => $detail->id,
-          'name' => $detail->name,
-          'type' => ImageType::File,
-          'file' => $detail->thumbnail,
-        ];
-        array_push($images, $image);
-      }
-    }
+            // Product detail images logic removed
 
-    foreach ($product->image as $image) {
-      if ($image->file || $image->link) {
-        if ($image->type == ImageType::Youtube) {
-          $url_component = parse_url($image->link);
-          if (isset($url_component['query'])) {
-            parse_str($url_component['query'], $params);
-            $image->youtubeId = $params['v'];
-            $image->file = "https://img.youtube.com/vi/" . $params['v'] . "/hqdefault.jpg";
-          }
-          ;
-        }
-        $image->ref = 'image';
-        array_push($images, $image->toArray());
-      }
-    }
-    $images = collect($images)->sortBy([
-      ['type', 'desc'],
-    ])->values();
+
+    // Product images logic removed as Image table/model is not in migrations
+    // $images = ...
+    $images = [];
 
     $data = [
       'title' => $product?->name ?? "Produk",
       'product' => $product,
       'categories' => $categories,
-      'partner' => $partner,
-      'productDetail' => $productDetail ?? [],
-      'tags' => $tags,
       'status' => array_values(ProductStatusType::asArray()),
-      'detail_status' => array_values(OriginStatusType::asArray()),
-      'image_type' => array_values(ImageType::asArray()),
+      // 'detail_status' => array_values(OriginStatusType::asArray()), // OriginStatusType might be missing too? No, used in Order form.
+      // 'image_type' => ..., // Removed
       'images' => $images,
       'isAdmin' => $product->user_id == auth()->user()->id || auth()->user()->role == UserType::Admin
     ];
@@ -365,9 +295,6 @@ class ProductController extends BaseResourceController
   public function updateStatus($productId, $request)
   {
     try {
-      $productDetail = ProductDetail::where('product_id', $productId)->first();
-      // if (!$productDetail && $request->update_status == ProductStatusType::Publish) return redirect("/admin/product/$productId?show=packet")->with('error', 'Publikasi tidak dapat dilakukan. Harap tambahkan paket terlebih dahulu');
-
       $product = Product::where('id', $productId)->first();
       if (!$product)
         return redirect("/admin/product")->with('error', 'Produk ini tidak ditemukan');
@@ -375,27 +302,7 @@ class ProductController extends BaseResourceController
       $validate['status'] = $request->update_status;
       $message = 'Produk berhasil dipublikasi';
 
-      if ($request->update_status == ProductStatusType::Publish && auth()->user()->role == UserType::Partner) {
-        // Notification
-        $adminBody = str_replace('{partner_name/email}', auth()->user()->name . '/' . auth()->user()->email, NotifConstants::$ADMIN['REQUEST_PRODUCT']);
-        $notifData = [
-          'user_id' => User::where('role', 'admin')->first()->id,
-          'body' => $adminBody,
-          'type' => 'REQUEST_PRODUCT' . '=' . $productId,
-        ];
-        Notification::create($notifData);
-        $validate['status'] = ProductStatusType::Review;
-        $message = 'Pengajuan publikasi berhasil dikirim. Kami akan meninjau produk yang anda publikasikan';
-        (new NotificationApiController())->sendProductReviewEmailNotification($product->id);
-      } else {
-        $freelancerBody = str_replace('{product_name}', $product?->name, NotifConstants::$FREELANCER['REQUEST_PRODUCT']);
-        $notifData = [
-          'user_id' => $product->user_id,
-          'body' => $freelancerBody,
-          'type' => 'REQUEST_PRODUCT' . '=' . $productId,
-        ];
-        Notification::create($notifData);
-      }
+      // Notifications removed as table doesn't exist
 
       $product->update($validate);
 

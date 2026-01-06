@@ -24,17 +24,9 @@ class Product extends Model
   {
     return $this->belongsTo(User::class, 'user_id', 'id');
   }
-  public function assignedUser()
-  {
-    return $this->belongsTo(User::class, 'assigned_user_id', 'id');
-  }
   public function order()
   {
     return $this->belongsTo(Order::class, 'id', 'product_id');
-  }
-  public function productDetail()
-  {
-    return $this->hasMany(ProductDetail::class, 'product_id', 'id');
   }
   public function category()
   {
@@ -44,20 +36,7 @@ class Product extends Model
   {
     return $this->hasMany(Image::class, 'product_id', 'id');
   }
-  public function productTag()
-  {
-    return $this->hasMany(ProductTag::class, 'product_id', 'id');
-  }
-  public function feedbacks()
-  {
-    return $this->hasMany(\App\Models\Feedback::class);
-  }
-  public function comments()
-  {
-    return $this->feedbacks()->where('type', FeedbackType::Comment);
-  }
-  public function ratings()
-  {
-    return $this->feedbacks()->where('type', FeedbackType::Rating);
-  }
+  // feedbacks removed
+  // comments removed
+  // ratings removed
 }
